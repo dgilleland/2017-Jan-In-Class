@@ -7,6 +7,8 @@ namespace LanguageReview.CSharp
     {
         public static void Main(string[] args)
         {
+            LockDriver demo = new LockDriver();
+            demo.PickLock();
         }
     }
 }
