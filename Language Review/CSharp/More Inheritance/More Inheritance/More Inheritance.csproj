@@ -56,6 +56,7 @@
     <Compile Include="Inheritance\KeyLock.cs" />
     <Compile Include="Inheritance\KeyPin.cs" />
     <Compile Include="Inheritance\Train.cs" />
+    <Compile Include="LockDriver.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
