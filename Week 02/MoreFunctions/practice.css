@@ -1,0 +1,23 @@
+html { background-color: lightgray; }
+body {
+    width: 960px;
+    margin: 0 auto;
+    background-color: papayawhip;
+    font-size: 24px;
+    display: flex;
+    flex-direction: column;
+}
+
+.row {
+    flex-direction: row;
+}
+
+.col-reverse {
+    flex-direction: column-reverse;
+}
+
+header, main, footer {
+    padding: 10px;
+}
+
+main { background-color: white; }
