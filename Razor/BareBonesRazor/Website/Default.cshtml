@@ -1,24 +1,23 @@
 ﻿@{
     Page.Title = "My Razor Page";
-    //Layout = "Your Layout Page goes here";
+    Layout = "~/_Layout.cshtml"; // the ~ means the root of the website
 }
 
-<html>
-<head>
-    <title>@Page.Title</title>
-    <!-- Inside the <style> tag, we write CSS -->
-    <style>
-        /* This is how you do CSS comments (multi-line) */
-        .page-header {
-            background-color:azure;
-        }
-    </style>
-</head>
-<body>
-    <h1 class="page-header">Welcome to @Page.Title</h1>
-    <script>
-        /* Javascript comments are a lot like C# comments */
-        // alert('Your computer is infected.');
-    </script>
-</body>
-</html>
+@section head {
+<style>
+    /* This is how you do CSS comments (multi-line) */
+    .page-header {
+        background-color: azure;
+    }
+</style>
+}
+
+@section pagefooter {
+<p>Today's date is @DateTime.Today.ToLongDateString().</p>
+}
+
+<h1 class="page-header">Welcome to @Page.Title</h1>
+<script>
+    /* Javascript comments are a lot like C# comments */
+    // alert('Your computer is infected.');
+</script>
