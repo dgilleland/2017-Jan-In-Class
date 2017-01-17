@@ -1,10 +1,50 @@
 ﻿@{
     Page.Title = "Sandbox - A Place to Play";
     Layout = "~/_Layout.cshtml";
+    if(IsPost)
+    {
+        <div>This page was requested as a POST request.</div>
+    }
+    else
+    {
+        <div>This page was requested as a GET request. Any form information sent via a GET request will appear in a Query String.</div>
+    }
 }
 @section pagefooter {
-<p>This is a place to put all sorts of test Razor code.</p>
+    <p>This is a place to put all sorts of test Razor code.</p>
+    <p>A web page that sends information to a web server needs to have all of its user input controls inside of a &lt;form&gt; tag. A form tag can send the information back as either a GET or POST request to the web server.</p>
 }
 <div>
-    
+    <form method="get">
+        Your Name: <input type="text" name="visitorName" />
+        <input type="submit" value="Send Name via GET" />
+    </form>
 </div>
+<div>
+    <form method="post">
+        Your Name: <input type="text" name="visitorName" />
+        <input type="submit" value="Send Name via POST" />
+    </form>
+</div>
+
+@{ 
+    if(IsPost)
+    {
+        // In a POST request, all the form values are stored in the
+        // Form collection in the Request object
+        string theName = Request.Form["visitorName"];
+        <div>Hello @theName</div>
+    }
+    else
+    {
+        // In a GET request, all the form values are sent via a Query String
+        // and are accessible through the QueryString collection in the
+        // Request object
+        string queryStringValue = Request.QueryString["visitorName"];
+        // if (!string.IsNullOrEmpty(queryStringValue))
+        if (!queryStringValue.IsEmpty())
+        {
+           <div>Hello @queryStringValue! I see your information is also in the address bar as a query string.</div>
+        }
+    }
+}

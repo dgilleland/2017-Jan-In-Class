@@ -1,0 +1,36 @@
+﻿@{
+    Page.Title = "Exploring the HTML Input Tag";
+    Layout = "~/_Layout.cshtml";
+}
+@section pagefooter {
+    <div>The following are valid types for the Input tag:</div>
+    <ul>
+        <li>Text-based Input: text, password, email, number, search, tel, etc.</li>
+        <li>Check-box Control: checkbox (if you want to group the checkboxes, make sure all the input controls have the same name attribute)</li>
+        <li>Radio Button: radio (radio buttons must have the same name to work as a group)</li>
+        <li>Slider Control: range - use with these attributes: min, max, step</li>
+        <li>Color Control: color</li>
+        <li>File Upload Control: file - use the accept attribute to define the types of files that the control can select</li>
+        <li>Buttons: submit, reset, button</li>
+    </ul>
+    <div>A full list can be found <a href="https://developer.mozilla.org/en/docs/Web/HTML/Element/input" target="_blank">here</a>.</div>
+}
+<form method="get">
+    <input type="submit" value="Submit Form" />
+    <div>
+        Courses: <br />
+        <input type="checkbox" name="courses" value="CPSC1517" /> Intro to App Dev<br />
+        <input type="checkbox" name="courses" value="DMIT1508" /> Database<br />
+        <input type="checkbox" name="courses" value="CPSC1520" /> JavaScript<br />
+        @{
+            string courseSelections = Request.QueryString["courses"];
+            if (!string.IsNullOrEmpty(courseSelections))
+            {
+                <div>The value on the server is "@courseSelections".</div>
+            }
+        }
+    </div>
+    <div>
+        TODO: Add additional div sections for the user to work with the following: A set of Radio buttons, a color selection, a datetime selection, a number input, and a range input (where the min is 10 and the max is 50 and the step is 5). Display the results of what the user sent you.
+    </div>
+</form>
