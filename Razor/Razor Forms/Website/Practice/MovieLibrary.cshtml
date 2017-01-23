@@ -1,0 +1,133 @@
+﻿@{
+    Page.Title = "Movie Library";
+    Layout = "~/_Layout.cshtml";
+
+    // Declare variables for all the form input items
+    // Note that the string values here MUST match the names of
+    // the form's input controls.
+    string movieTitle = Request.Form["movieTitle"];
+    string year = Request.Form["year"];
+    string media = Request.Form["media"];
+    string rating = Request.Form["rating"];
+    string genre = Request.Form["genre"];
+    string reviewStars = Request.Form["review"];
+    string barCode = Request.Form["isbn"];
+    string submitButton = Request.Form["clearForm"];
+    if(submitButton == "clear")
+    {
+        // Manually set all my variable to being empty
+        movieTitle = "";
+        year = "";
+        media = "";
+        rating = "";
+        reviewStars = "";
+        barCode = "";
+    }
+}
+<div class="row">
+    <div class="col-md-6">
+        <h1>Movie Library</h1>
+        <p>Fill out the form below to add information on the movie for your movie library.</p>
+        <form method="post">
+            <fieldset>
+                <legend>Movie Details</legend>
+                <label for="movieTitleInput">Title</label>
+                <input id="movieTitleInput" name="movieTitle"
+                       class="form-control" type="text" value="@movieTitle" />
+
+                <label for="year">Year</label>
+                <input id="year" name="year"
+                       class="form-control" type="text" value="@year" />
+
+                <label for="media">Media</label>
+                <div id="media">
+                    <!-- This is how Bootstrap shows to group/layout radio buttons -->
+                    <div class="radio">
+                        <label>
+                            <input id="media-dvd" name="media"
+                                   type="radio" value="DVD"
+                                   checked="@(media=="DVD")" />
+                            DVD
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input id="media-vhs" name="media"
+                                   type="radio" value="VHS"
+                                   checked="@(media=="VHS")" />
+                            VHS
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input id="media-file" name="media"
+                                   type="radio" value="File"
+                                   checked="@(media=="File")" />
+                            File
+                        </label>
+                    </div>
+                </div>
+
+                <label for="rating">Rating</label>
+                <div>
+                    <input id="rating-" name="rating"
+                           type="radio" value="G"
+                           checked="@(rating=="G")" /> General (G)
+                    <input id="rating-" name="rating"
+                           type="radio" value="PG"
+                           checked="@(rating=="PG")" /> Parental Guidance (PG)
+                    <input id="rating-" name="rating"
+                           type="radio" value="14A"
+                           checked="@(rating=="14A")" /> 14A
+                    <input id="rating-" name="rating"
+                           type="radio" value="18A"
+                           checked="@(rating=="18A")" /> 18A
+                    <input id="rating-" name="rating"
+                           type="radio" value="R"
+                           checked="@(rating=="R")" /> Restricted (R)
+                </div>
+
+                <label for="genre">Genre</label>
+                <div id="genre">
+                    <input type="checkbox" name="genre"
+                           checked="@(genre != null && genre.Contains("A"))" 
+                           value="A" /> Adventure
+                    <input type="checkbox" name="genre"
+                           checked="@(genre != null && genre.Contains("B"))" 
+                           value="B" /> Comedy
+                    <input type="checkbox" name="genre"
+                           checked="@(genre != null && genre.Contains("C"))" 
+                           value="C" /> Drama
+                    <input type="checkbox" name="genre"
+                           checked="@(genre != null && genre.Contains("D"))" 
+                           value="D" /> Documentary
+                </div>
+
+                <label for="review">Review</label>
+                <select id="review" name="review" class="form-control">
+                    <option selected="@(reviewStars == "1")" value="1">1 Star</option>
+                    <option selected="@(reviewStars == "2")" value="2">2 Star</option>
+                    <option selected="@(reviewStars == "3")" value="3">3 Star</option>
+                    <option selected="@(reviewStars == "4")" value="4">4 Star</option>
+                    <option selected="@(reviewStars == "5")" value="5">5 Star</option>
+                </select>
+
+                <label for="isbn">ISBN</label>
+                <input id="isbn" name="isbn" class="form-control" value="@barCode" />
+
+                <button type="submit">Add to Library</button>
+                <button type="reset">Reset form</button>
+                <button type="submit" name="clearForm" value="clear">Clear form</button>
+            </fieldset>
+        </form>
+    </div>
+    <div class="col-md-6">
+        <p><b>NOTES:</b> This sample form makes use of Bootstrap styling.</p>
+        @if (IsPost) // the following will only be shown on submit
+        {
+            <p>You added a movie with the following information:</p>
+            <p>The movie "@movieTitle" (@year) was added to your library. (@barCode - @media - @rating) @reviewStars stars.</p>
+            <p>The genre is @genre.</p>
+        }
+    </div>
+</div>
