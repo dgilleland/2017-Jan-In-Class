@@ -1,0 +1,59 @@
+﻿@{
+    Page.Title = "Sandbox - Show Products";
+    Layout = "~/_SiteLayout.cshtml";
+
+    var db = Database.Open("NW");
+    string queryCategories = "SELECT CategoryID, CategoryName FROM Categories ORDER BY CategoryName";
+    var rowsOfData = db.Query(queryCategories);
+}
+
+<h1>Show Products (Search Page)</h1>
+
+<form method="post">
+    Categories:
+    <select name="selectedCategory">
+        <option value="">[Select a category]</option>
+        @foreach (var row in rowsOfData)
+        {
+            <option value="@row.CategoryID">@row.CategoryName</option>
+        }
+    </select>
+    <button type="submit">Show Products</button>
+    <input type="reset" value="Reset Form" />
+</form>
+
+@if (IsPost)
+{
+    string selected = Request.Form["selectedCategory"];
+    int categoryId;
+    if (int.TryParse(selected, out categoryId))
+    {
+        // Retrieving all the Product information for the category
+        // {0} is a placeholder
+        string query = "SELECT ProductName, QuantityPerUnit, UnitPrice, UnitsInStock FROM Products WHERE CategoryID = @0";
+        var products = db.Query(query, categoryId);
+        //                             \ as many parameter values as you need
+
+        <table>
+            <tr>
+                <th>Product Name</th>
+                <th>Units In Stock</th>
+                <th>Quantity/Unit</th>
+                <th>Unit Price</th>
+            </tr>
+            @foreach (var row in products)
+            {
+                <tr>
+                    <td>@row.ProductName</td>
+                    <td>@row.UnitsInStock</td>
+                    <td>@row.QuantityPerUnit</td>
+                    <td>@row.UnitPrice.ToString("C")</td>
+                </tr>
+            }
+        </table>
+    }
+    else
+    {
+        <div>You must select a category before clicking [Show Products].</div>
+    }
+}
