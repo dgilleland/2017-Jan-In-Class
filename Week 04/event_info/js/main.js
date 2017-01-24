@@ -1,5 +1,9 @@
 function about(evt) {
   console.log(evt);
+  // TODO: Learn about the event object (type, target, srcElement, etc.)
+
+  // TODO: Learn about the this keyword
+  console.log(this);
 }
 
 function pageReady() {
