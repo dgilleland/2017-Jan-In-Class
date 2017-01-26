@@ -1,0 +1,29 @@
+﻿@{
+    Page.Title = "Manage Products";
+    Layout = "~/_SiteLayout.cshtml";
+}
+
+<form method="post">
+    <label for="currentProducts">Current Products</label>
+    <select id="currentProducts" name="currentProducts">
+        <option value="">[Select a Product]</option>
+    </select>
+    <button type="submit" name="command" value="select">Select Product</button>
+
+    <fieldset>
+        <legend>Product Details</legend>
+        Product Id <input type="text" name="productId" value="" disabled /><br />
+        Product name <input type="text" name="productName" value="" /><br />
+        Supplier <select name="supplierId"></select>
+        Category <select name="categoryId"></select>
+        Quantity/Unit <input type="text" name="qtyPerUnit" value="" /><br />
+        Unit Price <input type="text" name="price" value="" /><br />
+        In Stock <input type="number" name="inStock" value="" /><br />
+        On Order <input type="number" name="onOrder" value="" /><br />
+        Reorder Level <input type="number" name="reorder" value="" /><br />
+        Discontinued <input type="checkbox" name="discontinued" value="" /><br />
+    </fieldset>
+    <button type="submit" name="command" value="add">Add Product</button>
+    <button type="submit" name="command" value="update">Update Product</button>
+    <button type="submit" name="command" value="delete">Delete Product</button>
+</form>
