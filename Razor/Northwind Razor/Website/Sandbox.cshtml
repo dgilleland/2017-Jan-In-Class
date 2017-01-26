@@ -1,0 +1,16 @@
+﻿@{
+    Page.Title = "Ad-Hoc Sandbox";
+    Layout = "~/_SiteLayout";
+
+    string names = "Dan,Sam,Don,Geoff,Steve";
+    string[] data = names.Split(',');
+}
+
+<div>
+    <ul>
+        @foreach (var item in data)
+        {
+        <li>@item</li>
+        }
+    </ul>
+</div>
