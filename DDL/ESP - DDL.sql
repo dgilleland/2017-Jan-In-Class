@@ -43,42 +43,73 @@ CREATE TABLE Customers
 (
     -- The body of a CREATE TABLE will identify a comma-separated list of
     -- Column Declarations.
-    CustomerNumber  int,
-    FirstName       varchar(50),
-    LastName        varchar(60),
-    [Address]       varchar(40),
-    City            varchar(35),
-    Province        char(2),
-    PostalCode      char(6),
-    PhoneNumber     char(13)
+    CustomerNumber  int
+        -- A constraint is some sort of restriction for what is (and isn't)
+        -- an acceptable value for the column
+        CONSTRAINT PK_Customers_CustomerNumber
+            -- A primary key constraint means that each row of data MUST
+            -- have a unique value AND that this unique value will identify
+            -- or distinquish each Customer from other Customers
+            -- A primary key constraint results in a CLUSTERED INDEX,
+            -- which simply means that the main (or primary) way in which
+            -- the data is sorted (indexed) is by the data in this column.
+            PRIMARY KEY
+            -- An IDENTITY constraint means the database enters values when adding rows
+            -- 100 is the "seed" (starting value), and 1 is the increment
+            IDENTITY(100, 1)        NOT NULL,   -- NOT NULL when data is Required
+    FirstName       varchar(50)     NOT NULL,
+    LastName        varchar(60)     NOT NULL,
+    [Address]       varchar(40)     NOT NULL,
+    City            varchar(35)     NOT NULL,
+    Province        char(2)         NOT NULL,
+    PostalCode      char(6)         NOT NULL,
+    PhoneNumber     char(13)            NULL    -- Optional - can be "blank"
 )
 
 CREATE TABLE Orders
 (
-    OrderNumber     int,
-    CustomerNumber  int,
-    [Date]          datetime,
-    Subtotal        money,
-    GST             money,
-    Total           money
+    OrderNumber     int
+        CONSTRAINT PK_Orders_OrderNumber
+            PRIMARY KEY
+            IDENTITY(200, 1)                NOT NULL,
+    CustomerNumber  int
+        CONSTRAINT FK_Orders_CustomerNumber_Customers_CustomerNumber
+            FOREIGN KEY REFERENCES
+                Customers(CustomerNumber)   NOT NULL,
+    [Date]          datetime                NOT NULL,
+    Subtotal        money                   NOT NULL,
+    GST             money                   NOT NULL,
+    Total           money                   NOT NULL
 )
 
 CREATE TABLE InventoryItems
 (
-    ItemNumber          varchar(5),
-    ItemDescription     varchar(50),
-    CurrentSalePrice    money,
-    InStockCount        int,
-    ReorderLevel        int
+    ItemNumber          varchar(5)
+        CONSTRAINT PK_InventoryItems_ItemNumber
+            PRIMARY KEY                 NOT NULL,
+    ItemDescription     varchar(50)     NOT NULL,
+    CurrentSalePrice    money           NOT NULL,
+    InStockCount        int             NOT NULL,
+    ReorderLevel        int             NOT NULL
 )
 
 CREATE TABLE OrderDetails
 (
-    OrderNumber     int,
-    ItemNumber      int,
-    Quantity        int,
-    SellingPrice    money,
-    Amount          money
+    OrderNumber     int
+        CONSTRAINT FK_OrderDetails_OrderNumber_Orders_OrderNumber
+        FOREIGN KEY REFERENCES
+            Orders(OrderNumber)         NOT NULL,
+    ItemNumber      varchar(5)
+        CONSTRAINT FK_OrderDetails_ItemNumber_InventoryItems_ItemNumber
+        FOREIGN KEY REFERENCES
+            InventoryItems(ItemNumber)  NOT NULL,
+    Quantity        int                 NOT NULL,
+    SellingPrice    money               NOT NULL,
+    Amount          money               NOT NULL,
+    -- The following is a Table Constraint
+    --  Composite Keys must be done as Table Constraints
+    CONSTRAINT PK_OrderDetails_OrderNumber_ItemNumber
+        PRIMARY KEY (OrderNumber, ItemNumber)
 )
 
 GO
