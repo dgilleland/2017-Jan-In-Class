@@ -24,6 +24,7 @@
     {
         <hr />
         int catId;
+        // try to get a category ID from the drop-down
         if (int.TryParse(Request.Form["selectedCategory"], out catId))
         {
             var products = db.Query("SELECT ProductID, ProductName, QuantityPerUnit, UnitPrice, UnitsInStock FROM Products WHERE CategoryID = @0", catId);
@@ -31,8 +32,20 @@
             var myGrid = new WebGrid(products);
             <div>
                 <h3>Products</h3>
-                @myGrid.GetHtml();
+                @myGrid.GetHtml(columns: myGrid.Columns(
+                    myGrid.Column(columnName: "ProductName",
+                                  header: "Product Name"),
+                    myGrid.Column(columnName: "QuantityPerUnit",
+                                  header: "Qty/Unit"),
+                    myGrid.Column(header: "Action",
+                                  columnName: "ProductID",
+                                  format: @<text><a href="~/Admin/ManageProducts.cshtml?editId=@item.ProductID">Edit</a></text>)
+               ))
             </div>
+        }
+        else
+        {
+            <div>Please select a category before searching for products.</div>
         }
     }
 
