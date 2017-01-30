@@ -1,48 +1,48 @@
 1. **Book the First—Recalled to Life**
-  1. The Period
-  1. The Mail  
-  1. The Night Shadows  
-  1. The Preparation  
-  1. The Wine-shop  
-  1. The Shoemaker  
-1. **Book the Second—the Golden Thread**  
-  1. Five Years Later  
-  1. A Sight  
-  1. A Disappointment  
-  1. Congratulatory  
-  1. The Jackal  
-  1. Hundreds of People  
-  1. Monseigneur in Town  
-  1. Monseigneur in the Country  
-  1. The Gorgon’s Head  
-  1. Two Promises  
-  1. A Companion Picture  
-  1. The Fellow of Delicacy  
-  1. The Fellow of No Delicacy  
-  1. The Honest Tradesman  
-  1. Knitting
-  1. Still Knitting  
-  1. One Night  
-  1. Nine Days  
-  1. An Opinion  
-  1. A Plea  
-  1. Echoing Footsteps  
-  1. The Sea Still Rises  
-  1. Fire Rises  
-  1. Drawn to the Loadstone Rock  
-1. **Book the Third—the Track of a Storm**  
-  1. In Secret  
-  1. The Grindstone  
-  1. The Shadow  
-  1. Calm in Storm  
-  1. The Wood-Sawyer  
-  1. Triumph  
-  1. A Knock at the Door  
-  1. A Hand at Cards  
-  1. The Game Made  
-  1. The Substance of the Shadow  
-  1. Dusk  
-  1. Darkness  
-  1. Fifty-two  
-  1. The Knitting Done  
-  1. The Footsteps Die Out For Ever
+  1. [The Period](ch1-01.md)
+  1. [The Mail](ch1-02.md)
+  1. [The Night Shadows](ch1-03.md)
+  1. [The Preparation](ch1-04.md)
+  1. [The Wine-shop](ch1-05.md)
+  1. [The Shoemaker](ch1-06.md)
+1. **Book the Second—the Golden Thread**
+  1. [Five Years Later](ch2-01.md)
+  1. [A Sight](ch2-02.md)
+  1. [A Disappointment](ch2-03.md)
+  1. [Congratulatory](ch2-04.md)
+  1. [The Jackal](ch2-05.md)
+  1. [Hundreds of People](ch2-06.md)
+  1. [Monseigneur in Town](ch2-07.md)
+  1. [Monseigneur in the Country](ch2-08.md)
+  1. [The Gorgon’s Head](ch2-09.md)
+  1. [Two Promises](ch2-10.md)
+  1. [A Companion Picture](ch2-11.md)
+  1. [The Fellow of Delicacy](ch2-12.md)
+  1. [The Fellow of No Delicacy](ch2-13.md)
+  1. [The Honest Tradesman](ch2-14.md)
+  1. [Knitting](ch2-15.md)
+  1. [Still Knitting](ch2-16.md)
+  1. [One Night](ch2-17.md)
+  1. [Nine Days](ch2-18.md)
+  1. [An Opinion](ch2-19.md)
+  1. [A Plea](ch2-20.md)
+  1. [Echoing Footsteps](ch2-21.md)
+  1. [The Sea Still Rises](ch2-22.md)
+  1. [Fire Rises](ch2-23.md)
+  1. [Drawn to the Loadstone Rock](ch2-24.md)
+1. **Book the Third—the Track of a Storm**
+  1. [In Secret](ch3-01.md)
+  1. [The Grindstone](ch3-02.md)
+  1. [The Shadow](ch3-03.md)
+  1. [Calm in Storm](ch3-04.md)
+  1. [The Wood-Sawyer](ch3-05.md)
+  1. [Triumph](ch3-06.md)
+  1. [A Knock at the Door](ch3-07.md)
+  1. [A Hand at Cards](ch3-08.md)
+  1. [The Game Made](ch3-09.md)
+  1. [The Substance of the Shadow](ch3-10.md)
+  1. [Dusk](ch3-11.md)
+  1. [Darkness](ch3-12.md)
+  1. [Fifty-two](ch3-13.md)
+  1. [The Knitting Done](ch3-14.md)
+  1. [The Footsteps Die Out For Ever](ch3-15.md)
