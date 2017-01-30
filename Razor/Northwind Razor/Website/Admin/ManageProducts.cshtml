@@ -44,8 +44,24 @@
         <legend>Product Details</legend>
         Product Id <input type="text" name="productId" value="@pid" disabled /><br />
         Product name <input type="text" name="productName" value="@productName" /><br />
-        Supplier <select name="supplierId"></select>
-        Category <select name="categoryId"></select>
+
+        Supplier
+        <select name="supplierId">
+            <option value="">[no supplier]</option>
+            @foreach (var item in allSuppliers)
+            {
+                <option value="@item.SupplierID">@item.CompanyName</option>
+            }
+        </select><br />
+        Category
+        <select name="categoryId">
+            <option value="">[no category]</option>
+            @foreach (var item in allCategories)
+            {
+                <option value="@item.CategoryID">@item.CategoryName</option>
+            }
+        </select><br />
+
         Quantity/Unit <input type="text" name="qtyPerUnit" value="@quantity" /><br />
         Unit Price <input type="text" name="price" value="@up" /><br />
         In Stock <input type="number" name="inStock" value="@stock" /><br />
