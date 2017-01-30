@@ -10,6 +10,10 @@
     bool isDiscontinued;
 
     // Pull the data from the Request.Form collection
+    // 1) The selected product ID and the command
+    string current = Request.Form["currentProducts"];
+    string command = Request.Form["command"];
+    // 2) The data on the product entered into the form
     pid = Request.Form["productId"];
     productName = Request.Form["productName"];
     sid = Request.Form["supplierId"];
@@ -22,8 +26,45 @@
     disc = Request.Form["discontinued"]; // checkbox -> "on"
     isDiscontinued = !string.IsNullOrEmpty(disc);
 
-    // Get all products, categories, & suppliers for the drop-downs
     var db = Database.Open("NW");
+    if(IsPost)
+    {
+        if(command == "select")
+        {
+            // Looking up a specific product
+            int currentProductId;
+            if (int.TryParse(current, out currentProductId))
+            {
+                string selectQuery = "SELECT ProductID, ProductName, SupplierID, CategoryID, QuantityPerUnit, UnitPrice, UnitsInStock, UnitsOnOrder, ReorderLevel, Discontinued FROM Products WHERE ProductID = @0";
+                // Notice the use of QuerySingle - we expect only 1 product
+                var selectedProduct = db.QuerySingle(selectQuery, currentProductId);
+                // At this point, selectedProduct is an object with a
+                // property for each column of data retrieved.
+
+                // "Unpack" the selectedProduct into the strings that
+                // are noted in our input's value attributes
+                pid = selectedProduct.ProductID.ToString(); // int
+                productName = selectedProduct.ProductName;
+                quantity = selectedProduct.QuantityPerUnit;
+                up = selectedProduct.UnitPrice.ToString(); // decimal
+                stock = selectedProduct.UnitsInStock.ToString(); // short
+                order = selectedProduct.UnitsOnOrder.ToString(); // short
+                reorder = selectedProduct.ReorderLevel.ToString(); // short
+                                                                   // data for the drop-downs
+                sid = selectedProduct.SupplierID.ToString(); // int?
+                cid = selectedProduct.CategoryID.ToString(); // int?
+
+                // data for the checkbox
+                isDiscontinued = selectedProduct.Discontinued;
+            }
+            else
+            {
+                <div>Please choose a product before clicking the [Select Product] button.</div>
+            }
+        }
+    }
+
+    // Get all products, categories, & suppliers for the drop-downs
     var allProducts = db.Query("SELECT ProductID, ProductName FROM Products");
     var allSuppliers = db.Query("SELECT SupplierID, CompanyName FROM Suppliers");
     var allCategories = db.Query("SELECT CategoryID, CategoryName FROM Categories");
@@ -35,7 +76,8 @@
         <option value="">[Select a Product]</option>
         @foreach (var item in allProducts)
         {
-            <option value="@item.ProductID">@item.ProductName</option>
+            <option selected="@(current == item.ProductID.ToString())"
+               value="@item.ProductID">@item.ProductName</option>
         }
     </select>
     <button type="submit" name="command" value="select">Select Product</button>
@@ -50,7 +92,8 @@
             <option value="">[no supplier]</option>
             @foreach (var item in allSuppliers)
             {
-                <option value="@item.SupplierID">@item.CompanyName</option>
+                <option selected="@(sid == item.SupplierID.ToString())"
+                   value="@item.SupplierID">@item.CompanyName</option>
             }
         </select><br />
         Category
@@ -58,7 +101,8 @@
             <option value="">[no category]</option>
             @foreach (var item in allCategories)
             {
-                <option value="@item.CategoryID">@item.CategoryName</option>
+                <option selected="@(cid == item.CategoryID.ToString())"
+                   value="@item.CategoryID">@item.CategoryName</option>
             }
         </select><br />
 
