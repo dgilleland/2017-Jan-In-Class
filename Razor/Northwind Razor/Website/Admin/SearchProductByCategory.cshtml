@@ -1,0 +1,39 @@
+﻿@{
+    Page.Title = "Search Products by Category";
+    Layout = "~/_SiteLayout.cshtml";
+
+    var db = Database.Open("NW");
+    var allCategories = db.Query("SELECT CategoryID, CategoryName FROM Categories");
+}
+
+<div>
+    <h1>Search Products by Category</h1>
+
+    <form method="post">
+        Category:
+        <select name="selectedCategory">
+            <option value="">[Select a Category]</option>
+            @foreach (var item in allCategories)
+            {
+                <option value="@item.CategoryID">@item.CategoryName</option>
+            }
+        </select>
+        <button type="submit">Look up Products</button>
+    </form>
+    @if (IsPost)
+    {
+        <hr />
+        int catId;
+        if (int.TryParse(Request.Form["selectedCategory"], out catId))
+        {
+            var products = db.Query("SELECT ProductID, ProductName, QuantityPerUnit, UnitPrice, UnitsInStock FROM Products WHERE CategoryID = @0", catId);
+            // Create a WebGrid with the resulting data
+            var myGrid = new WebGrid(products);
+            <div>
+                <h3>Products</h3>
+                @myGrid.GetHtml();
+            </div>
+        }
+    }
+
+</div>
