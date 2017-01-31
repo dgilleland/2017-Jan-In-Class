@@ -59,7 +59,7 @@
             }
             else
             {
-                <div>Please choose a product before clicking the [Select Product] button.</div>
+                ErrorMessage("Please choose a product before clicking the [Select Product] button.");
             }
         }
     }
@@ -117,3 +117,17 @@
     <button type="submit" name="command" value="update">Update Product</button>
     <button type="submit" name="command" value="delete">Delete Product</button>
 </form>
+
+@helper ErrorMessage(string message) { 
+    // Helpers are reusable snippets of Razor syntax exposed as a method.
+    // Helpers are able to render HTML directly, while functions do not
+    // render any HTML.
+    <div style="color:red;">@message</div>
+}
+
+@functions {
+    // A functions section is used to place any page-global functions that can be
+    // called from within the page. It's one way to "modularize" aspect of your
+    // Razor web page's server-side processing.
+    // Functions should be thought of as static utility methods.
+} 
