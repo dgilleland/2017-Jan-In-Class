@@ -27,10 +27,15 @@
     isDiscontinued = !string.IsNullOrEmpty(disc);
 
     var db = Database.Open("NW");
-    if(IsPost)
+
+    if(IsPost || !string.IsNullOrEmpty(Request.QueryString["editId"]))
     {
-        if(command == "select")
+        if(command == "select" || !string.IsNullOrEmpty(Request.QueryString["editId"]))
         {
+            if (!string.IsNullOrEmpty(Request.QueryString["editId"]))
+            {
+                current = Request.QueryString["editId"];
+            }
             // Looking up a specific product
             int currentProductId;
             if (int.TryParse(current, out currentProductId))
