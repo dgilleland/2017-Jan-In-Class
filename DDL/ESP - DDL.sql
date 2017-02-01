@@ -61,9 +61,39 @@ CREATE TABLE Customers
     LastName        varchar(60)     NOT NULL,
     [Address]       varchar(40)     NOT NULL,
     City            varchar(35)     NOT NULL,
-    Province        char(2)         NOT NULL,
-    PostalCode      char(6)         NOT NULL,
-    PhoneNumber     char(13)            NULL    -- Optional - can be "blank"
+    Province        char(2)
+		-- A Default Constraint means that if no data is supplied for this column
+		-- during an INSERT statement, then the default data will be entered.
+		CONSTRAINT DF_Customers_Province
+			DEFAULT('AB')			-- Strings are in single quotes
+		-- A Check Constraint means that if the supplied data does not meet the
+		-- requirements of the CHECK, then it will be rejected
+		CONSTRAINT CK_Customers_Province
+			CHECK  (Province = 'AB' OR
+			        Province = 'BC' OR
+			        Province = 'SK' OR
+			        Province = 'MB' OR
+			        Province = 'QC' OR
+			        Province = 'NT' OR
+			        Province = 'NS' OR
+			        Province = 'NL' OR
+			        Province = 'YK' OR
+			        Province = 'NU' OR
+			        Province = 'PE')
+					    	        NOT NULL,
+    PostalCode      char(6)
+        CONSTRAINT CK_Customers_PostalCode
+            CHECK (PostalCode LIKE '[A-Z][0-9][A-Z][0-9][A-Z][0-9]')
+            -- PostalCode must match the pattern of A#A#A#
+            -- In SQL, we can enclose a character pattern inside square brackets
+            -- The A-Z means a "range" of characters from A through Z
+            -- whereas [0-9] means the digits 0 through 9
+                                    NOT NULL,
+    PhoneNumber     char(13)
+        CONSTRAINT CK_Customers_PhoneNumber
+            CHECK (PhoneNumber LIKE
+                   '([0-9][0-9][0-9])[0-9][0-9][0-9]-[0-9][0-9][0-9][0-9]')
+                                        NULL    -- Optional - can be "blank"
 )
 
 CREATE TABLE Orders
@@ -77,9 +107,13 @@ CREATE TABLE Orders
             FOREIGN KEY REFERENCES
                 Customers(CustomerNumber)   NOT NULL,
     [Date]          datetime                NOT NULL,
-    Subtotal        money                   NOT NULL,
-    GST             money                   NOT NULL,
-    Total           money                   NOT NULL
+    Subtotal        money               
+        CONSTRAINT CK_CustomerOrders_Subtotal
+            CHECK (Subtotal > 0)            NOT NULL,
+    GST             money               
+        CONSTRAINT CK_CustomerOrders_GST
+            CHECK (GST >= 0)                NOT NULL,
+    Total           AS Subtotal + GST       -- Compute the Total instead of storing it
 )
 
 CREATE TABLE InventoryItems
@@ -103,9 +137,17 @@ CREATE TABLE OrderDetails
         CONSTRAINT FK_OrderDetails_ItemNumber_InventoryItems_ItemNumber
         FOREIGN KEY REFERENCES
             InventoryItems(ItemNumber)  NOT NULL,
-    Quantity        int                 NOT NULL,
-    SellingPrice    money               NOT NULL,
-    Amount          money               NOT NULL,
+    Quantity        int        
+        CONSTRAINT DF_OrderDetails_Quantity
+            DEFAULT (1)
+        CONSTRAINT CK_OrderDetails_Quantity
+            CHECK (Quantity > 0)
+                                        NOT NULL,
+    SellingPrice    money           
+        CONSTRAINT CK_OrderDetails_SellingPrice
+            CHECK (SellingPrice >= 0)
+                                        NOT NULL,
+    Amount          AS Quantity * SellingPrice  , -- Computed Column
     -- The following is a Table Constraint
     --  Composite Keys must be done as Table Constraints
     CONSTRAINT PK_OrderDetails_OrderNumber_ItemNumber
@@ -115,6 +157,31 @@ CREATE TABLE OrderDetails
 GO
 -- End of tables for Specification Document 1
 
+-- Assuming that the database is now being used, there may be a bunch of data in the database.
+-- Inserting Customer data
+INSERT INTO Customers(FirstName, LastName, [Address], City, PostalCode)
+    VALUES ('Clark', 'Kent', '344 Clinton Street', 'Metropolis', 'S0S0N0')
+INSERT INTO Customers(FirstName, LastName, [Address], City, PostalCode)
+    VALUES ('Jimmy', 'Olsen', '242 River Close', 'Bakerline', 'B4K3R1')
+
+-- Inserting inventory items
+INSERT INTO InventoryItems(ItemNumber, ItemDescription, CurrentSalePrice, InStockCount, ReorderLevel)
+    VALUES ('H8726', 'Cleaning Fan belt', 29.95, 3, 5),
+           ('H8621', 'Engine Fan belt', 17.45, 10, 5)
+
+-- Inserting an order
+INSERT INTO Orders(CustomerNumber, [Date], Subtotal, GST)
+    VALUES (100, GETDATE(), 17.45, 0.87)
+INSERT INTO OrderDetails(OrderNumber, ItemNumber, Quantity, SellingPrice)
+    VALUES (200, 'H8726', 1, 17.45)
+GO
+
+-- We can see data in our tables by doing SELECT statements
+-- Select the customer information
+SELECT  CustomerNumber, FirstName, LastName, 
+        [Address] + ' ' + City + ', ' + Province AS 'Customer Address',
+        PhoneNumber
+FROM    Customers
 
 
 /* ======================================================
