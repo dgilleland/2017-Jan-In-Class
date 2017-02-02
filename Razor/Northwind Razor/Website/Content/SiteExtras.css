@@ -8,3 +8,11 @@ select {
     padding: 5px;
     width: 300px;
 }
+
+.ui-state-success,
+.ui-widget-content .ui-state-success,
+.ui-widget-header .ui-state-success {
+	border: 1px solid #0ec829;
+	background: #60fc80;
+	color: #777620;
+}
