@@ -192,10 +192,71 @@ FROM    Customers
  *  having to drop it or lose information in the table
  * **************************/
 
+GO -- Calling sp_help is best done in it's own "batch"
+sp_help Customers -- sp_help is a stored procedure that gives info on objects in the database
+GO
 -- A) Allow Address, City, Province, and Postal Code to be NULL
+ALTER TABLE Customers
+    ALTER COLUMN [Address] varchar(40)  NULL
+GO -- this statement helps to "separate" various DDL statements in our script. It's optional.
+
+ALTER TABLE Customers
+    ALTER COLUMN City       varchar(35) NULL
+GO
+
+ALTER TABLE Customers
+    ALTER COLUMN Province   char(2)     NULL
+GO
+
+ALTER TABLE Customers
+    ALTER COLUMN PostalCode char(6)     NULL
+GO
+
 
 -- B) Add a check constraint on the First and Last name to require at least two letters.
 --    % is a wildcard for zero or more characters (letter, digit, or other character)
+/*
+-- If a constraint already exists, it can be dropped in an ALTER TABLE statement.
+ALTER TABLE Customers
+    DROP CONSTRAINT CK_Customers_FirstName
+GO
+ALTER TABLE Customers
+    DROP CONSTRAINT CK_Customers_LastName
+GO
+*/
+ALTER TABLE Customers
+    ADD CONSTRAINT CK_Customers_FirstName
+        CHECK (FirstName LIKE '__%') -- the _ is a wildcard for any single character
+GO
+ALTER TABLE Customers
+    ADD CONSTRAINT CK_Customers_LastName
+        CHECK (LastName LIKE '[A-Z][A-Z]%') -- two or more letters
+GO
+/*
+    Now, the following should fail....
+    INSERT INTO Customers(FirstName, LastName)
+        VALUES ('A', '')
+
+    INSERT INTO Customers(FirstName, LastName)
+        VALUES ('12Bob', '23Smith')
+ */
+ -- Add a few customers
+INSERT INTO Customers(FirstName, LastName)
+    VALUES ('Fred', 'Flintstone')
+INSERT INTO Customers(FirstName, LastName)
+    VALUES ('Barney', 'Rubble')
+INSERT INTO Customers(FirstName, LastName, PhoneNumber)
+    VALUES ('Wilma', 'Slaghoople', '(403)555-1212')
+INSERT INTO Customers(FirstName, LastName, [Address], City)
+    VALUES ('Betty', 'McBricker', '103 Granite Road', 'Bedrock')
+GO
+
+-- Select the customer information
+SELECT   CustomerNumber, FirstName, LastName,
+         [Address] + ' ' + City + ', ' + Province AS 'Customer Address',
+         PhoneNumber
+    FROM Customers
+
 
 -- C) Add a default constraint on the Orders.Date column to use the current date.
 --    GETDATE() is a global function in the SQL Server Database
