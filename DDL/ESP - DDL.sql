@@ -261,9 +261,26 @@ SELECT   CustomerNumber, FirstName, LastName,
 -- C) Add a default constraint on the Orders.Date column to use the current date.
 --    GETDATE() is a global function in the SQL Server Database
 --    GETDATE() will obtain the current date/time on the database server
+ALTER TABLE Orders
+    ADD CONSTRAINT DF_Orders_Date
+        DEFAULT GETDATE() FOR [Date]
+        --      \ value /    |      |
+        --                   \column/
+GO
+-- To illustrate the default value, consider this sample row for the Orders table
+INSERT INTO Orders(CustomerNumber, Subtotal, GST)
+    VALUES (101, 150.00, 7.50)
+-- Select the current orders
+SELECT  OrderNumber, CustomerNumber, Total, [Date]
+FROM    Orders
 
 -- D) Change the InventoryItems.ItemDescription column to be NOT NULL
 --    Create some sample data to demonstrate that the column currently allows NULL values
+INSERT INTO InventoryItems(ItemNumber, ItemDescription, CurrentSalePrice, InStockCount, ReorderLevel)
+    VALUES ('GR35A', NULL, 45.95, 8, 5)
+GO
+SELECT  ItemNumber, ItemDescription, CurrentSalePrice
+FROM    InventoryItems
 
 -- E) Add indexes to the Customer's First and Last Name columns
 --    as well as to the Item's Description column.
