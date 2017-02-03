@@ -121,7 +121,7 @@ CREATE TABLE InventoryItems
     ItemNumber          varchar(5)
         CONSTRAINT PK_InventoryItems_ItemNumber
             PRIMARY KEY                 NOT NULL,
-    ItemDescription     varchar(50)     NOT NULL,
+    ItemDescription     varchar(50)         NULL,
     CurrentSalePrice    money           NOT NULL,
     InStockCount        int             NOT NULL,
     ReorderLevel        int             NOT NULL
@@ -281,6 +281,46 @@ INSERT INTO InventoryItems(ItemNumber, ItemDescription, CurrentSalePrice, InStoc
 GO
 SELECT  ItemNumber, ItemDescription, CurrentSalePrice
 FROM    InventoryItems
+
+--  D-1) Imagine that we tried now to put a Default Constraint in place.
+--     What would be the result of our select statement afterwards?
+ALTER TABLE InventoryItems
+    ADD CONSTRAINT DF_InventoryItems_Description
+        DEFAULT '-no description-' FOR ItemDescription
+GO
+INSERT INTO InventoryItems(ItemNumber, CurrentSalePrice, InStockCount, ReorderLevel)
+    VALUES ('B-95R', 45.95, 8, 5)
+-- Notice that our default constraint does not *prevent* a NULL value being inserted,
+-- because at present, our ItemDescription still allows for NULL values.
+INSERT INTO InventoryItems(ItemNumber, ItemDescription, CurrentSalePrice, InStockCount, ReorderLevel)
+    VALUES ('GR47D', NULL, 92.45, 3, 3)
+GO
+SELECT ItemNumber, ItemDescription, CurrentSalePrice
+    FROM InventoryItems
+
+-- Let's look at what would happen if we tried changing ItemDescription to NOT NULL
+-- even though we currently have NULL values for some of the rows.
+/* Select and run the following ALTER TABLE to see what would happen...
+ALTER TABLE InventoryItems
+    ALTER COLUMN ItemDescription varchar(50) NOT NULL
+GO
+*/
+--  D-2) Update existing NULL column data with replacement text
+--       so that, after this statement, we can then make the
+--       column required
+UPDATE      InventoryItems
+    SET     ItemDescription = '-missing-'
+    WHERE   ItemDescription IS NULL
+GO
+SELECT ItemNumber, ItemDescription, CurrentSalePrice
+    FROM InventoryItems
+
+--  D-3) Do the required change request: Make the ItemDescription NOT NULL
+--     NOTE: If you make a column to be NOT NULL when there are existing rows with
+--           NULL values for that column, then the ALTER statement should fail.
+ALTER TABLE InventoryItems
+    ALTER COLUMN ItemDescription varchar(50) NOT NULL
+GO
 
 -- E) Add indexes to the Customer's First and Last Name columns
 --    as well as to the Item's Description column.
