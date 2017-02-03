@@ -322,7 +322,23 @@ ALTER TABLE InventoryItems
     ALTER COLUMN ItemDescription varchar(50) NOT NULL
 GO
 
--- E) Add indexes to the Customer's First and Last Name columns
+-- E) Add a column called Discontinued to the InventoryItems table.
+--    It must be a bit data type, is optional, and must default to 0.
+ALTER TABLE InventoryItems
+    ADD     Discontinued    bit     NULL    -- bit data types are like boolean
+            CONSTRAINT DF_InventoryItems_Discontinued
+                DEFAULT (0)
+GO
+
+-- F) Add a check constraint on the InventoryItems table for the 
+--    ReorderLevel column to make sure it is greater than or equal to zero
+ALTER TABLE InventoryItems
+    ADD CONSTRAINT CK_InventoryItems_ReorderLevel
+        CHECK (ReorderLevel >= 0)
+GO
+
+
+-- G) Add indexes to the Customer's First and Last Name columns
 --    as well as to the Item's Description column.
 --    Indexes improve the performance of the database when retrieving information.
 
