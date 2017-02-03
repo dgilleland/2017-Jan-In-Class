@@ -183,7 +183,33 @@ SELECT  CustomerNumber, FirstName, LastName,
         PhoneNumber
 FROM    Customers
 
+/* ***************************
+ * Change Requests for Spec 1
+ *  Perform table changes through ALTER statements.
+ *  Syntax for ALTER TABLE can be found at
+ *      http://msdn.microsoft.com/en-us/library/ms190273.aspx
+ *  ALTER TABLE statements allow us to change an existing table without
+ *  having to drop it or lose information in the table
+ * **************************/
 
+-- A) Allow Address, City, Province, and Postal Code to be NULL
+
+-- B) Add a check constraint on the First and Last name to require at least two letters.
+--    % is a wildcard for zero or more characters (letter, digit, or other character)
+
+-- C) Add a default constraint on the Orders.Date column to use the current date.
+--    GETDATE() is a global function in the SQL Server Database
+--    GETDATE() will obtain the current date/time on the database server
+
+-- D) Change the InventoryItems.ItemDescription column to be NOT NULL
+--    Create some sample data to demonstrate that the column currently allows NULL values
+
+-- E) Add indexes to the Customer's First and Last Name columns
+--    as well as to the Item's Description column.
+--    Indexes improve the performance of the database when retrieving information.
+
+
+-- ===========================================================================================
 /* ======================================================
  *   STUDENT  PRACTICE  (and solutions)                  
  * ====================================================== */
