@@ -341,7 +341,21 @@ GO
 -- G) Add indexes to the Customer's First and Last Name columns
 --    as well as to the Item's Description column.
 --    Indexes improve the performance of the database when retrieving information.
+CREATE NONCLUSTERED INDEX IX_Customers_FirstName
+    ON Customers (FirstName)
+CREATE NONCLUSTERED INDEX IX_Customers_LastName
+    ON Customers (LastName)
+-- The following index is for two columns AS A GROUP
+-- This index is sorted alphabetically, first by LastName, then by FirstName
+CREATE NONCLUSTERED INDEX IX_Customers_LastName_FirstName
+    ON Customers (LastName, FirstName)
 
+-- To drop an index, use the DROP INDEX statement
+DROP INDEX IX_Customers_LastName_FirstName
+    ON Customers
+
+CREATE NONCLUSTERED INDEX IX_InventoryItems_ItemDescription
+    ON InventoryItems (ItemDescription)
 
 -- ===========================================================================================
 /* ======================================================
