@@ -36,36 +36,6 @@
             {
                 current = Request.QueryString["editId"];
             }
-            // Looking up a specific product
-            int currentProductId;
-            if (int.TryParse(current, out currentProductId))
-            {
-                string selectQuery = "SELECT ProductID, ProductName, SupplierID, CategoryID, QuantityPerUnit, UnitPrice, UnitsInStock, UnitsOnOrder, ReorderLevel, Discontinued FROM Products WHERE ProductID = @0";
-                // Notice the use of QuerySingle - we expect only 1 product
-                var selectedProduct = db.QuerySingle(selectQuery, currentProductId);
-                // At this point, selectedProduct is an object with a
-                // property for each column of data retrieved.
-
-                // "Unpack" the selectedProduct into the strings that
-                // are noted in our input's value attributes
-                pid = selectedProduct.ProductID.ToString(); // int
-                productName = selectedProduct.ProductName;
-                quantity = selectedProduct.QuantityPerUnit;
-                up = selectedProduct.UnitPrice.ToString(); // decimal
-                stock = selectedProduct.UnitsInStock.ToString(); // short
-                order = selectedProduct.UnitsOnOrder.ToString(); // short
-                reorder = selectedProduct.ReorderLevel.ToString(); // short
-                                                                   // data for the drop-downs
-                sid = selectedProduct.SupplierID.ToString(); // int?
-                cid = selectedProduct.CategoryID.ToString(); // int?
-
-                // data for the checkbox
-                isDiscontinued = selectedProduct.Discontinued;
-            }
-            else
-            {
-                ErrorMessage("Please choose a product before clicking the [Select Product] button.");
-            }
         }
     }
 
@@ -130,9 +100,44 @@
     <div style="color:red;">@message</div>
 }
 
+
+
 @functions {
-    // A functions section is used to place any page-global functions that can be
-    // called from within the page. It's one way to "modularize" aspect of your
-    // Razor web page's server-side processing.
-    // Functions should be thought of as static utility methods.
-} 
+// A functions section is used to place any page-global functions that can be
+// called from within the page. It's one way to "modularize" aspect of your
+// Razor web page's server-side processing.
+// Functions should be thought of as static utility methods.
+void LookupProducts()
+    {
+        // Looking up a specific product
+        int currentProductId;
+        if (int.TryParse(current, out currentProductId))
+        {
+            string selectQuery = "SELECT ProductID, ProductName, SupplierID, CategoryID, QuantityPerUnit, UnitPrice, UnitsInStock, UnitsOnOrder, ReorderLevel, Discontinued FROM Products WHERE ProductID = @0";
+            // Notice the use of QuerySingle - we expect only 1 product
+            var selectedProduct = db.QuerySingle(selectQuery, currentProductId);
+            // At this point, selectedProduct is an object with a
+            // property for each column of data retrieved.
+
+            // "Unpack" the selectedProduct into the strings that
+            // are noted in our input's value attributes
+            pid = selectedProduct.ProductID.ToString(); // int
+            productName = selectedProduct.ProductName;
+            quantity = selectedProduct.QuantityPerUnit;
+            up = selectedProduct.UnitPrice.ToString(); // decimal
+            stock = selectedProduct.UnitsInStock.ToString(); // short
+            order = selectedProduct.UnitsOnOrder.ToString(); // short
+            reorder = selectedProduct.ReorderLevel.ToString(); // short
+                                                               // data for the drop-downs
+            sid = selectedProduct.SupplierID.ToString(); // int?
+            cid = selectedProduct.CategoryID.ToString(); // int?
+
+            // data for the checkbox
+            isDiscontinued = selectedProduct.Discontinued;
+        }
+        else
+        {
+            ErrorMessage("Please choose a product before clicking the [Select Product] button.");
+        }
+    }
+    } 
