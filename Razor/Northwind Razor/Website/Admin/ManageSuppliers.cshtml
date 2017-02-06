@@ -45,7 +45,7 @@
                     if (int.TryParse(selectedSupplier, out searchId))
                     {
                         // Query the database
-                        string selectQuery = "SELECT SupplierID, CompanyName, Contact, ContactTitle, Address, City, Region, PostalCode, Phone, Fax, HomePageTitle, HomePageUrl FROM Supplier WHERE SupplierID = @0";
+                        string selectQuery = "SELECT SupplierID, CompanyName, ContactName, ContactTitle, Address, City, Region, PostalCode, Phone, Fax, HomePageTitle, HomePageUrl FROM Supplier WHERE SupplierID = @0";
                         try
                         {
                             var supplier = db.QuerySingle(selectQuery, searchId);
@@ -77,7 +77,7 @@
                 case "insert":
                     // Add supplier
                     string insertCommand = "INSERT INTO Supplier"
-                        + "(CompanyName, Contact, ContactTitle, Address, City, Region, PostalCode, Phone, Fax, HomePageTitle, HomePageUrl)"
+                        + "(CompanyName, ContactName, ContactTitle, Address, City, Region, PostalCode, Phone, Fax, HomePageTitle, HomePageUrl)"
                         + " VALUES "
                         + "  @0,          @1,      @2,           @3,      @4,   @5,      @6,        @7,    @8,  @9,            @10";
                     try
