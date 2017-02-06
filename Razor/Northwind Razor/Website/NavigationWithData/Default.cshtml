@@ -76,7 +76,7 @@ fieldset legend {
 
 <form method="post">
     <fieldset>
-        <legend>Response.Redirect + Server.Transfer</legend>
+        <legend>Response.Redirect + Server.TransferRequest</legend>
         <label>Enter a security question:</label>
         <input type="text" name="securityQuestion" list="defaultQuestions" class="wide" />
         <label>Enter your standard answer to this question:</label>
@@ -94,7 +94,7 @@ fieldset legend {
         }
         else
         {
-            Server.Transfer("~/NavigationWithData/Destination.cshtml", true);
+            Server.TransferRequest("~/NavigationWithData/Destination.cshtml", true);
         }
     }
 </form>
