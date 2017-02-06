@@ -1,13 +1,26 @@
 ﻿@{
     Page.Title = "Navigation with Data";
-    Layout = "~/_Layout.cshtml";
+    Layout = "~/_SiteLayout.cshtml";
 }
 
-@section head {
-    <style type="text/css">
-        input.wide{ min-width: 450px;}
-    </style>
+<style type="text/css">
+fieldset {
+    border-width: 2px;
+    border-style: groove;
+    border-color: threedface;
+    border-image: initial;
+    padding: 10px;
 }
+fieldset legend {
+    display: block; 
+    background-color: darkgray;
+    font-size: 1.1em;
+    font-style: italic;
+    color: white;
+    font-weight: bold;
+    padding: 2px;
+}
+</style>
 
 <h1>@Page.Title</h1>
 
@@ -63,6 +76,7 @@
 
 <form method="post">
     <fieldset>
+        <legend>Response.Redirect + Server.Transfer</legend>
         <label>Enter a security question:</label>
         <input type="text" name="securityQuestion" list="defaultQuestions" class="wide" />
         <label>Enter your standard answer to this question:</label>
