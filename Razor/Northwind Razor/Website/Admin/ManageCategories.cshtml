@@ -1,8 +1,17 @@
 ﻿@{
     Page.Title = "Manage Categories";
     Layout = "~/_SiteLayout.cshtml";
+
+    var db = Database.Open("NW");
+    var queryAllCategories = "SELECT CategoryID, CategoryName FROM Categories ORDER BY CategoryName";
+
+    string categoryId = "1";
+    var queryOneCategory = "SELECT CategoryID, CategoryName, Description, Picture, PictureMimeType FROM Categories WHERE CategoryID = @0";
+    var foundCategory = db.QuerySingle(queryOneCategory, categoryId);
 }
 
 <div>
-    
+    <h1>Manage Categories</h1>
+
+    <img src="data:@foundCategory.PictureMimeType;base64,@Convert.ToBase64String(foundCategory.Picture)" />
 </div>
