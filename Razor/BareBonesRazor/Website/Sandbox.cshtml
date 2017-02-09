@@ -1,13 +1,13 @@
 ﻿@{
     Page.Title = "Sandbox - A Place to Play";
     Layout = "~/_Layout.cshtml";
-    if(IsPost)
+    if (IsPost)
     {
         <div>This page was requested as a POST request.</div>
     }
     else
     {
-        <div>This page was requested as a GET request. Any form information sent via a GET request will appear in a Query String.</div>
+        <div>This page was requested as a GET request. Any form information sent via a GET request will appear in a Query String in the browser's Address Bar.</div>
     }
 }
 @section pagefooter {
@@ -16,19 +16,26 @@
 }
 <div>
     <form method="get">
-        Your Name: <input type="text" name="visitorName" />
-        <input type="submit" value="Send Name via GET" />
+        <fieldset>
+            <legend>A form that sends via GET</legend>
+            Your Name: <input type="text" name="visitorName" />
+            <input type="submit" value="Send Name via GET" />
+        </fieldset>
     </form>
 </div>
+<hr />
 <div>
     <form method="post">
-        Your Name: <input type="text" name="visitorName" />
-        <input type="submit" value="Send Name via POST" />
+        <fieldset>
+            <legend>A form that sends via POST</legend>
+            Your Name: <input type="text" name="visitorName" />
+            <input type="submit" value="Send Name via POST" />
+        </fieldset>
     </form>
 </div>
 
-@{ 
-    if(IsPost)
+@{
+    if (IsPost)
     {
         // In a POST request, all the form values are stored in the
         // Form collection in the Request object
@@ -44,7 +51,41 @@
         // if (!string.IsNullOrEmpty(queryStringValue))
         if (!queryStringValue.IsEmpty())
         {
-           <div>Hello @queryStringValue! I see your information is also in the address bar as a query string.</div>
+            <div>Hello @queryStringValue! I see your information is also in the address bar as a query string.</div>
         }
     }
 }
+
+<hr />
+@{
+    string foreground = null;
+    string background = null;
+}
+<div class="colorMix">
+    <style type="text/css">
+        .colorMix {
+            @if (IsPost)
+            {
+                foreground = Request.Form["fore"];
+                background = Request.Form["back"];
+                <text>
+                    /* This is CSS */
+                    color: @foreground;
+                    background-color: @background;
+                </text>
+
+            }
+        }
+    </style>
+    <form method="post">
+        <fieldset>
+            <legend>A color-mix example</legend>
+            <label>Foreground</label>
+            <input type="color" name="fore" value="@foreground" />
+            <label>Background</label>
+            <input type="color" name="back" value="@background" />
+            <button type="submit">Set the color mix for this form</button>
+        </fieldset>
+    </form>
+</div>
+
