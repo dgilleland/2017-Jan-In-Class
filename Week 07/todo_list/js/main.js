@@ -6,14 +6,7 @@
 // const - declare a variable whose value I don't expect to change
 // let   - declare a variable whose value I DO expect to change
 const subject = document.querySelector('[name=toggle]'); // Square brackets are for attributes
-const invert = document.querySelector('[name=invert]');
 const checks = document.querySelectorAll('[name=message]'); // gets an Array
-
-invert
-  .addEventListener('click',
-                    evt => 
-                      checks.forEach(element => 
-                                       element.checked = !element.checked));
 
 subject.addEventListener('change', // change event - contents of input have changed
   function(evt) { // Anonymous function - no name, and it's just "inlined"
@@ -34,3 +27,21 @@ subject.addEventListener('change', // change event - contents of input have chan
       index = index + 1;
     }
 });
+
+
+// Here's some extra code to handle the new button on the form for inverting
+// the checkbox states.
+const invert = document.querySelector('[name=invert]');
+
+invert
+  .addEventListener('click',
+                    evt => 
+                      checks.forEach(element => 
+                                       element.checked = !element.checked));
+/*
+=> is called an "Arrow Function" (aka "fat arrow" functions)
+              function(evt){
+                checks.forEach(function(element) {
+                  element.checked = !element.checked;
+              })}
+*/
