@@ -33,17 +33,66 @@ WHERE   P.PositionID = 3
 
 --6. select the CourseNames whose CourseHours are less than 96
 SELECT  C.CourseName --, C.CourseHours
-FROM    Course C
+FROM    Course C     -- C is a Table alias
 WHERE   C.CourseHours < 96
 
 --7. Select the studentID's, CourseID and mark where the Mark is between 70 and 80
+SELECT  R.StudentID, R.CourseId, R.Mark
+FROM    Registration R
+--WHERE   R.Mark >= 70 AND R.Mark <= 80
+WHERE   R.Mark BETWEEN 70 AND 80 -- BETWEEN is inclusive
 
+--7.a Select the student IDs where the withdrawal status is null
+SELECT  StudentID--, WithdrawYN
+FROM    Registration
+WHERE   WithdrawYN IS NULL -- we use IS NUL instead of = NULL
+-- It's not necessary that the result returns rows for it to be correct.
+
+-- 7.b Select the studentIDs of students who have withdrawn from a course
+SELECT  StudentID
+FROM    Registration
+WHERE   WithdrawYN = 'Y'
 
 --8. Select the studentID's, CourseID and mark where the Mark is between 70 and 80 and the courseID is DMIT223 or DMIT168
+/*
+INSERT INTO Registration(CourseId, Mark, Semester, StaffID, StudentID)
+VALUES ('DMIT223', 40, '2000S', 5, 199899200)
+*/
+SELECT  R.StudentID, R.CourseId, R.Mark
+FROM    Registration R
+WHERE   R.Mark BETWEEN 70 AND 80
+  AND   (R.CourseId = 'DMIT223' OR R.CourseId = 'DMIT168')
+-- alternate answer to #8
+SELECT  R.StudentID, R.CourseId, R.Mark
+FROM    Registration R
+WHERE   R.Mark BETWEEN 70 AND 80
+  AND   R.CourseId IN ('DMIT223', 'DMIT168')
 
+--8.a Select the studentIDs, CourseID and mark where the Mark is 80 and 85
+SELECT  R.StudentID, R.CourseId, R.Mark
+FROM    Registration R
+WHERE   R.Mark = 80 OR R.Mark = 85
+--WHERE   R.Mark IN (80, 85)
+
+-- Pattern matching searches often use the LIKE comparison along with
+-- wildcards.
+    -- % is a wildcard for 0 or more characters
+    -- _ is a wildcard for a single character
+    -- Square brackets are used to identify a single character that
+    --  fits a range or is one of the set
+        -- [1-9] means any digit from 1 to 9, but not zero
+        -- '[BN]ob' would match for either 'Bob' or 'Nob'
 --9. Select the students first and last names who have last names starting with S
+SELECT  S.FirstName, S.LastName
+FROM    Student S
+WHERE   S.LastName LIKE 'S%' 
 
---10. Select Coursenames whose CourseID  have a 1 as the fifth character
+--10. Select Coursenames whose CourseID  has a 1 as the fifth character
+SELECT CourseName --, CourseID
+FROM   Course
+WHERE  CourseId LIKE '____1%' -- four underscores, 1, %
+--                    DMIT158
+
 
 --11. Select the CourseID's and Coursenames where the CourseName contains the word 'programming'
 
