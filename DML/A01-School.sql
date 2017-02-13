@@ -156,7 +156,8 @@ go
 
 /* School158 Data Inserts */
 
-use IQSchool
+use [A01-School]
+
 go
 
 delete from Payment
