@@ -45,14 +45,14 @@
                     if (int.TryParse(selectedSupplier, out searchId))
                     {
                         // Query the database
-                        string selectQuery = "SELECT SupplierID, CompanyName, ContactName, ContactTitle, Address, City, Region, PostalCode, Phone, Fax, HomePageTitle, HomePageUrl FROM Supplier WHERE SupplierID = @0";
+                        string selectQuery = "SELECT SupplierID, CompanyName, ContactName, ContactTitle, Address, City, Region, PostalCode, Phone, Fax, HomePageTitle, HomePageUrl FROM Suppliers WHERE SupplierID = @0";
                         try
                         {
                             var supplier = db.QuerySingle(selectQuery, searchId);
                             // "Unpack" the data (most of which are strings)
                             supplierId = supplier.SupplierID.ToString();
                             company = supplier.CompanyName;
-                            contact = supplier.Contact;
+                            contact = supplier.ContactTitle;
                             contactTitle = supplier.ContactTitle;
                             address = supplier.Address;
                             city = supplier.City;
@@ -65,7 +65,7 @@
                         }
                         catch (Exception ex)
                         {
-                            DisplayMessage("Database Error: " + ex.Message, "error");
+                            @DisplayMessage("Database Error: " + ex.Message, "error");
                         }
                     }
                     else
@@ -76,27 +76,27 @@
                     break;
                 case "insert":
                     // Add supplier
-                    string insertCommand = "INSERT INTO Supplier"
+                    string insertCommand = "INSERT INTO Suppliers"
                         + "(CompanyName, ContactName, ContactTitle, Address, City, Region, PostalCode, Phone, Fax, HomePageTitle, HomePageUrl)"
-                        + " VALUES "
-                        + "  @0,          @1,      @2,           @3,      @4,   @5,      @6,        @7,    @8,  @9,            @10";
+                        + " VALUES ("
+                        + "  @0,          @1,      @2,           @3,      @4,   @5,      @6,        @7,    @8,  @9,            @10)";
                     try
                     {
-                        db.Execute(insertCommand, company, contact, address, city, region, postalCode, phone, fax, webTitle, webUrl);
-                        int newId = db.GetLastInsertId();
+                        db.Execute(insertCommand, company, contact, contactTitle, address, city, region, postalCode, phone, fax, webTitle, webUrl);
+                        var newId = db.GetLastInsertId();
                         selectedSupplier = newId.ToString(); // for drop-down
                         supplierId = selectedSupplier;       // for input
                     }
                     catch (Exception ex)
                     {
-                        DisplayMessage("Database Error: " + ex.Message, "error");
+                        @DisplayMessage("Database Error: " + ex.Message, "error");
                     }
                     break;
                 case "update":
                     // Update supplier
-                    string updateCommand = " UPDATE Supplier "
+                    string updateCommand = " UPDATE Suppliers "
                                          + " SET CompanyName = @1"
-                                         + "    ,Contact = @2"
+                                         + "    ,ContactName = @2"
                                          + "    ,ContactTitle = @3"
                                          + "    ,Address = @4"
                                          + "    ,City = @5"
@@ -109,46 +109,46 @@
                                          + " WHERE SupplierID = @0";
                     try
                     {
-                        int rowsAffected = db.Execute(updateCommand, supplierId, company, contact, address, city, region, postalCode, phone, fax, webTitle, webUrl);
+                        int rowsAffected = db.Execute(updateCommand, supplierId, company, contact, contactTitle, address, city, region, postalCode, phone, fax, webTitle, webUrl);
                         if (rowsAffected > 0)
                         {
-                            DisplayMessage("Update was successful", "success");
+                            @DisplayMessage("Update was successful", "success");
                         }
                         else
                         {
-                            DisplayMessage("Update did not happen", "info");
+                            @DisplayMessage("Update did not happen", "info");
                         }
                     }
                     catch (Exception ex)
                     {
-                        DisplayMessage("Database Error: " + ex.Message, "error");
+                        @DisplayMessage("Database Error: " + ex.Message, "error");
                     }
                     break;
                 case "delete":
                     // Delete supplier
-                    string deleteCommand = " DELETE Supplier "
+                    string deleteCommand = " DELETE Suppliers "
                                          + " WHERE SupplierID = @0";
                     try
                     {
                         int rowsAffected = db.Execute(deleteCommand, supplierId);
                         if (rowsAffected > 0)
                         {
-                            DisplayMessage("Supplier has been deleted", "success");
+                            @DisplayMessage("Supplier has been deleted", "success");
                         }
                         else
                         {
-                            DisplayMessage("Unable to delete the supplier", "info");
+                            @DisplayMessage("Unable to delete the supplier", "info");
                         }
                     }
                     catch (Exception ex)
                     {
-                        DisplayMessage("Database Error: " + ex.Message, "error");
+                        @DisplayMessage("Database Error: " + ex.Message, "error");
                     }
 
                     break;
                 default:
                     // Invalid command
-                    DisplayMessage("Unknown command", "error");
+                    @DisplayMessage("Unknown command", "error");
 
                     break;
             }
@@ -179,7 +179,7 @@
             <legend>Supplier Details</legend>
 
             <label>Supplier ID</label>
-            <input type="text" name="supplierId" value="@supplierId" disabled="disabled" />
+            <input type="text" name="supplierId" value="@supplierId" readonly="readonly" />
 
             <label>Company Name</label>
             <input type="text" name="companyName" value="@company" />
