@@ -18,6 +18,29 @@
                             regionGrid.Column(columnName: "RegionID", header: "Action",
                                               format: @<text><a href="~/Admin/AddEditRegion.cshtml?editId=@item.RegionID">Edit</a></text>
                             )))
+
+    <h1>Territories</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Territory ID</th>
+                <th>Description</th>
+                <th>Region (ID)</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in territories)
+            {
+            <tr>
+                <td>@item.TerritoryID</td>
+                <td>@item.TerritoryDescription</td>
+                <td>@item.RegionID</td>
+                <td><a href="~/Admin/AddEditTerritory.cshtml?editId=@item.TerritoryID">Edit</a></td>
+            </tr>
+            }
+        </tbody>
+    </table>
 </div>
 
 @section featured {
@@ -34,3 +57,9 @@
         </div>
     </section>
 }
+
+<style>
+    .table td, .table th {
+        padding: 2px 5px;
+    }
+</style>
