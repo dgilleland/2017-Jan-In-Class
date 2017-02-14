@@ -1,0 +1,36 @@
+﻿@{
+    Page.Title = "List Territories and Regions";
+    Layout = "~/_SiteLayout.cshtml";
+
+    // Declare the Database object and get the data
+    var db = Database.Open("NW");
+    var regions = db.Query("SELECT RegionID, RegionDescription FROM Region");
+    var territories = db.Query("SELECT TerritoryID, TerritoryDescription, RegionID FROM Territories");
+    WebGrid regionGrid = new WebGrid(regions);
+}
+
+<div>
+    <h1>Regions</h1>
+    @regionGrid.GetHtml(tableStyle: "table",
+                        columns: regionGrid.Columns(
+                            regionGrid.Column(columnName: "RegionID", header: "Region ID"),
+                            regionGrid.Column(columnName: "RegionDescription", header: "Description"),
+                            regionGrid.Column(columnName: "RegionID", header: "Action",
+                                              format: @<text><a href="~/Admin/AddEditRegion.cshtml?editId=@item.RegionID">Edit</a></text>
+                            )))
+</div>
+
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h1>@Page.Title.</h1>
+                <h2>Northwind Trader's &ndash; Territories and Regions</h2>
+            </hgroup>
+            <p>In this sample, a WebGrid and a simple table are used to show lists of Territories and Regions. The lists include links to an add/edit page for each.</p>
+            <p>The SQL statements for selecting data for this page are:</p>
+            <pre><code>SELECT RegionID, RegionDescription FROM Region</code></pre>
+            <pre><code>SELECT TerritoryID, TerritoryDescription, RegionID FROM Territories</code></pre>
+        </div>
+    </section>
+}
