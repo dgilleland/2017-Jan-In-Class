@@ -45,3 +45,21 @@ invert
                   element.checked = !element.checked;
               })}
 */
+
+document.querySelector('button[name=submitMe]').addEventListener('click', function(evt) {
+  // Get the text from the partialText input and look for those checkboxes that contain that text.
+  var searchText = document.querySelector('input[name=partialText]').value; // <input ... />
+
+  for(var index = 0;index < checks.length; index++) {
+    // Breakpoint exploration
+    var checkbox = checks[index];
+    var siblingCell = checkbox.parentElement.nextElementSibling;
+    var tableRow = checkbox.parentElement.parentElement;
+    if(siblingCell.innerText.toLowerCase().includes(searchText.toLowerCase())) {
+      tableRow.classList.add('highlight');
+    } else {
+      tableRow.classList.remove('highlight');
+    }
+  }
+  evt.preventDefault();
+});
