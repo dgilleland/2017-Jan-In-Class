@@ -33,6 +33,18 @@
                 <asp:Label ID="Label5" runat="server" AssociatedControlID="DateOfBirth">Date of Birth</asp:Label>
                 <asp:TextBox ID="DateOfBirth" runat="server"
                      TextMode="Date" CssClass="form-control"></asp:TextBox>
+
+                <asp:Label ID="Label6" runat="server" AssociatedControlID="ProgramOfStudy">Program of Study</asp:Label>
+                <asp:DropDownList ID="ProgramOfStudy" runat="server" CssClass="form-control">
+                    <asp:ListItem Value="DMIT">Digital Media and Information Technology</asp:ListItem>
+                    <asp:ListItem>Business</asp:ListItem>
+                    <asp:ListItem Value="Dental">Dental Hygene</asp:ListItem>
+                    <asp:ListItem Value="EMT">Emergency Medial Technician</asp:ListItem>
+                </asp:DropDownList>
+
+                <asp:Label ID="Label7" runat="server" AssociatedControlID="SchoolYear">Starting School Year</asp:Label>
+                <asp:DropDownList ID="SchoolYear" runat="server" CssClass="form-control">
+                </asp:DropDownList>
             </fieldset>
             <p>
                 <asp:Button ID="Submit" runat="server" Text="Submit"
@@ -42,6 +54,11 @@
         </div>
         <div class="col-md-6">
             <asp:Label ID="MessageLabel" runat="server" />
+            <asp:GridView ID="RegistrationGridView" runat="server">
+                <EmptyDataTemplate>
+                    There are no registrations to display
+                </EmptyDataTemplate>
+            </asp:GridView>
         </div>
     </div>
 </asp:Content>
