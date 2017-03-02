@@ -32,7 +32,7 @@
 
                 <asp:Label ID="Label5" runat="server" AssociatedControlID="DateOfBirth">Date of Birth</asp:Label>
                 <asp:TextBox ID="DateOfBirth" runat="server"
-                     TextMode="Date" CssClass="form-control"></asp:TextBox>
+                     TextMode="SingleLine" CssClass="form-control"></asp:TextBox>
 
                 <asp:Label ID="Label6" runat="server" AssociatedControlID="ProgramOfStudy">Program of Study</asp:Label>
                 <asp:DropDownList ID="ProgramOfStudy" runat="server" CssClass="form-control">
@@ -51,6 +51,38 @@
                      CssClass="btn btn-primary"
                      OnClick="Submit_Click" />
             </p>
+            <div>
+                <%-- Validation Controls --%>
+                <asp:ValidationSummary ID="ValidationSummary1" runat="server" />
+                <asp:RequiredFieldValidator ID="ValidateFirstName" runat="server"
+                     Display="None"
+                     ErrorMessage="First name is required"
+                     ControlToValidate="FirstName" />
+                <asp:RequiredFieldValidator ID="ValidateLastName" runat="server"
+                     Display="None"
+                     ErrorMessage="Last name is required"
+                     ControlToValidate="LastName" />
+                <asp:RequiredFieldValidator ID="ValidateSIN" runat="server"
+                     Display="None"
+                     ErrorMessage="Social Insurance Number is required"
+                     ControlToValidate="SocialInsuranceNumber" />
+                <asp:RangeValidator ID="ValidateSINDigits" runat="server"
+                     Display="None"
+                     ErrorMessage="SIN numbers are nine digits"
+                     ControlToValidate="SocialInsuranceNumber"
+                     MinimumValue="100000000" MaximumValue="999999999"
+                     Type="Integer" />
+                <asp:RequiredFieldValidator ID="ValidateDOB" runat="server"
+                     Display="None"
+                     ErrorMessage="Date of Birth is required"
+                     ControlToValidate="DateOfBirth" />
+                <asp:RegularExpressionValidator ID="ValidateDateOfBirth"
+                     runat="server"
+                     Display="None"
+                     ErrorMessage="Must be a valid date (yyyy-mm-dd)"
+                     ControlToValidate="DateOfBirth"
+                     ValidationExpression="(19|20)\d\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])" />
+            </div>
         </div>
         <div class="col-md-6">
             <asp:Label ID="MessageLabel" runat="server" />
