@@ -18,21 +18,5 @@ document.querySelector('.carousel').addEventListener('click', function(evt) {
             // move to the previous index in the array
             currentImg -= 1;
         }
-        // Here's a one-liner to ensure we don't go outside the array bounds
-        // currentImg = Math.abs(currentImg) % images.length;
-        // Here's a better one-liner to ensure we don't go outside the array bounds
-        // using a *ternary expression*
-        currentImg = currentImg < 0
-                     ?  // if (currentImg < 0)
-                     images.length + currentImg   // value if true
-                     :  // else
-                     Math.abs(currentImg) % images.length; // value if false
-
-        // display the new currentImg
-        document.querySelector('.carousel>img').src = 
-            'images/' + images[currentImg];
-        // console.log('control %cclick%ced...', 
-        //             'color: green;font-size:larger',
-        //             'font-size:inherit');
     }
 });
