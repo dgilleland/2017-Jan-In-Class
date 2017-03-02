@@ -53,7 +53,9 @@
             </p>
             <div>
                 <%-- Validation Controls --%>
-                <asp:ValidationSummary ID="ValidationSummary1" runat="server" />
+                <asp:ValidationSummary ID="ValidationSummary1" runat="server"
+                     CssClass="alert alert-warning"
+                     HeaderText="Please fix the following problems before sumitting this form." />
                 <asp:RequiredFieldValidator ID="ValidateFirstName" runat="server"
                      Display="None"
                      ErrorMessage="First name is required"
