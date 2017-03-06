@@ -1,0 +1,98 @@
+<html>
+<head>
+    <title>CPSC-1520 - In-class Code Samples</title>
+    <script src="https://use.fontawesome.com/a155b34c0a.js"></script>
+    <style>
+        .fa::after { content: ' '; }
+
+        body {
+            display: grid;
+
+        }
+        body > main {
+            grid-row: 3;
+        }
+        body > nav {
+            grid-row: 2;
+        }
+        body > header {
+            grid-row: 1;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        nav li {
+        }
+    </style>
+    <script>
+        window.onload = ready;
+
+        function ready(evt) {
+            const template = document.getElementById('sectionHeader');
+            document
+                .querySelectorAll('nav a')
+                .forEach(el => {
+                    var wk = el.dataset.week;
+                    var section = document.querySelector('section[data-week=' + wk + ']');
+                    var heading = template.innerHTML;
+                    section.innerHTML = heading.replace('{{title}}', el.innerText).replace('{{link}}', el.dataset.moodle || '') + section.innerHTML;
+                });
+            
+            // Hoisted Functions
+            function changeSection(evt) {
+
+            }
+        }
+    </script>
+</head>
+<body>
+    <main>
+        <section data-week="home">
+            
+        </section>
+        <section data-week="wk1">
+            
+        </section>
+        <section data-week="wk2">
+            
+
+        </section>
+        <section data-week="wk4">
+            
+        </section>
+        <section data-week="wk7">
+            
+        </section>
+        <section data-week="wk10">
+            
+        </section>
+        <section data-week="wk13">
+            
+        </section>
+        <section data-week="extras">
+            
+        </section>
+    </main>
+    <header>
+        <h1>CPSC-1520 - In-class Code Samples</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="#" data-week="home"><i class="fa fa-home" aria-hidden="true"></i>Home</a></li>
+            <li><a href="#" data-week="wk1" data-moodle="https://moodle.nait.ca/course/view.php?id=40248&section=1">Introduction</a></li>
+            <li><a href="#" data-week="wk2" data-moodle="https://moodle.nait.ca/course/view.php?id=40248&section=2">Functions and Event</a></li>
+            <li><a href="#" data-week="wk4" data-moodle="https://moodle.nait.ca/course/view.php?id=40248&section=3">Making Decisions</a></li>
+            <li><a href="#" data-week="wk7" data-moodle="https://moodle.nait.ca/course/view.php?id=40248&section=4">Repetitions and Collections</a></li>
+            <li><a href="#" data-week="wk10" data-moodle="https://moodle.nait.ca/course/view.php?id=40248&section=5">DOM API</a></li>
+            <li><a href="#" data-week="wk113" data-moodle="https://moodle.nait.ca/course/view.php?id=40248&section=6">AJAX and JSON</a></li>
+            <li><a href="#" data-week="extras">Extras</a></li>
+        </ul>
+        <template id="sectionHeader">
+            <a href="{{link}}" target="moodle"><i class="fa fa-pull-right fa-graduation-cap fa-" aria-hidden="true"></i></a>
+            <h2>{{title}}</h2>
+        </template>
+    </nav>
+</body>
+</html>
