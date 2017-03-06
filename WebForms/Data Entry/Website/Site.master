@@ -49,12 +49,28 @@
                     <a class="navbar-brand" runat="server" href="~/">Application name</a>
                 </div>
                 <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li><a runat="server" href="~/">Home</a></li>
-                        <li><a runat="server" href="~/FormSamples/Default.aspx">Form Samples</a></li>
-                        <li><a runat="server" href="~/About">About</a></li>
-                        <li><a runat="server" href="~/Contact">Contact</a></li>
-                    </ul>
+                    <asp:Menu ID="SiteNav" runat="server"
+                         DataSourceID="SiteNavDataSource"
+                         Orientation="Horizontal"
+                         IncludeStyleBlock="false"
+                         StaticMenuStyle-CssClass="nav navbar-nav"
+                         StaticSelectedStyle-CssClass="active"
+                         StaticDisplayLevels="1"
+                         DynamicMenuStyle-CssClass="dropdown-menu"
+                         EnableViewState="false"
+                         EnableTheming="false">
+                    </asp:Menu>
+                    <script>
+                        /* Remove float styling that was injected for the menu control */
+
+                        $(function () {
+                            // Isolate the context for applying Bootstrap styling
+                            $('#SiteNav').next().removeAttr('style');
+                        });
+                    </script>
+
+                    <asp:SiteMapDataSource ID="SiteNavDataSource" runat="server" ShowStartingNode="false" />
+
                     <asp:LoginView runat="server" ViewStateMode="Disabled">
                         <AnonymousTemplate>
                             <ul class="nav navbar-nav navbar-right">

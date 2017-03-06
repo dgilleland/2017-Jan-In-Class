@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<siteMap xmlns="http://schemas.microsoft.com/AspNet/SiteMap-File-1.0" >
+    <siteMapNode title="Data Entry" description="Assorted Data Entry Forms">
+        <siteMapNode url="~/Default.aspx" title="Home" />
+        <siteMapNode url="~/FormSamples/Default.aspx" title="Form Samples" />
+        <siteMapNode title="About Us">
+          <siteMapNode url="~/About.aspx" title="Our History"/>
+          <siteMapNode url="~/Contact.aspx" title="Contact"/>
+        </siteMapNode>
+    </siteMapNode>
+</siteMap>
