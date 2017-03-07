@@ -18,5 +18,6 @@ document.querySelector('.carousel').addEventListener('click', function(evt) {
             // move to the previous index in the array
             currentImg -= 1;
         }
+        document.querySelector('.carousel>img').src = 'images/' + images[currentImg];
     }
 });
