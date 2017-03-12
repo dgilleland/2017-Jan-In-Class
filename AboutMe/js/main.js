@@ -1,9 +1,12 @@
+document.addEventListener("DOMContentLoaded", about);
+
 function about() {
   var info = {
     userName: '',
     surName: '',
     fullName: '',
     email: '',
+    hash: '',
     course: {
       fullName: '',
       shortName: ''
@@ -16,7 +19,12 @@ function about() {
   if(urlParams.has('em')) info.email = urlParams.get('em');
   if(urlParams.has('c_fn')) info.course.fullName = urlParams.get('c_fn');
   if(urlParams.has('c_sn')) info.course.shortName = urlParams.get('c_sn');
-  console.log(info);
-}
+  info.hash = md5(info.email.trim().toLowerCase());
+  
 
-about();
+  var diagnosticInfo = document.getElementById('info');
+  diagnosticInfo.innerHTML = JSON.stringify(info, null, 2);
+
+  // Populate About region
+  document.querySelector('img').src = 'https://www.gravatar.com/avatar/' + info.hash;
+}

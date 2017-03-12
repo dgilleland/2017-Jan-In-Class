@@ -1,13 +1,53 @@
 <html>
 <head>
   <title>About Me (From Moodle)</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="https://unpkg.com/blueimp-md5"></script>
 </head>
 <body>
   <header>
     <h1>About Me</h1>
     <h2>From Moodle</h2>
+    <img src="https://www.gravatar.com/avatar/HASH" />
+    <label>Full Name</label><span data-prop="fullName"></span>
+
+    <label>Surname</label><span data-prop="surName"></span>
+
+    <label>User Name</label><span data-prop="userName"></span>
+
+    <label>Email</label><span data-prop="email"></span>
+
+    <label>Course Name</label><span data-prop="course.fullName"></span>
+
+    <label>Course Name (short)</label><span data-prop="course.shortName"></span>
   </header>
-  <main></main>
+  <main>
+    <p>This sample illustrates a combination of handling Moodle QueryString Urls in JavaScript, manipulating JSON, and obtaining Gravatar images.</p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+  </main>
+  <footer>
+    <div>
+      <h3>About</h3>
+      <p>To use, go to the course's <a href="moodle.nait.ca">Moodle site</a> and follow the link titled "About Me (Local Host)", or use the following 
+      <a href="http://localhost:3000/?un=dgilleland&sn=Gilleland&fn=Dan%20Gilleland&em=DGilleland%40nait.ca&c_fn=CPSC1520%20-%20Javascript%20%282016%2F2017%20Winter%20Term%20%281162%29%29%20%28A03%29&c_sn=CPSC1520.1162.A03.REG.1">Sample Link</a>.</p>
+    </div>
+    <div class="cards">
+      <h3>Resources</h3>
+      <div><a href="https://davidwalsh.name/query-string-javascript">Get Query String Parameters with JavaScript</a></div>
+      <div><a href="https://davidwalsh.name/indent-json-javascript">Indent JSON with JavaScript</a></div>
+      <div><a href="https://github.com/blueimp/JavaScript-MD5">BlueImp MD5 Hash</a> via <a href="https://www.npmjs.com/package/blueimp-md5">unkpg.com</div>
+      <div><a href=""></a></div>
+    </div>
+    <div>
+      <h3>Diagnostics</h3>
+      <pre id="info"></pre>
+    </div>
+  </footer>
   <script src="js/main.js"></script>
 </body>
 </html>
