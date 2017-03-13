@@ -1,0 +1,74 @@
+body {
+    display: grid;
+    grid-template-rows: auto;
+
+}
+
+main, header, footer {
+    background: rgba(10,10,200, 20%);
+}
+
+main {
+    /*display: flex;*/
+    /*flex-flow: column wrap;*/
+    display: grid;
+    /*grid-auto-flow: column;*/
+    grid-gap: 5px;
+    grid-template-columns: repeat(5, 220px);
+}
+
+main h1 {
+    grid-column: 1 / span 5;
+}
+
+.card {
+    background: rgba(200, 10, 0, 10%);
+    padding: 8px;
+    border: solid 1px gray;
+    border-radius: 5px;
+}
+
+.card img {
+
+}
+
+.card h3 {
+
+}
+
+.card p {
+
+}
+
+@media only screen and (min-width: 460px) {
+    main {
+        display: grid;
+        grid-gap: 5px;
+        grid-template-columns: auto;
+    }
+    main h1 {
+        grid-column: 1;
+    }
+}
+
+@media only screen and (min-width: 700px) {
+    main {
+        display: grid;
+        grid-gap: 5px;
+        grid-template-columns: repeat(2, 220px);
+    }
+    main h1 {
+        grid-column: 1 / span 2;
+    }
+}
+
+@media only screen and (min-width: 980px) {
+    main {
+        display: grid;
+        grid-gap: 5px;
+        grid-template-columns: repeat(4, 220px);
+    }
+    main h1 {
+        grid-column: 1 / span 4;
+    }
+}
