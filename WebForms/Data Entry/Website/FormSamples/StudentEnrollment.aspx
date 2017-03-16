@@ -50,6 +50,9 @@
                 <asp:Button ID="Submit" runat="server" Text="Submit"
                      CssClass="btn btn-primary"
                      OnClick="Submit_Click" />
+                <asp:Button ID="ClearForm" runat="server" Text="Clear Form"
+                     CssClass="btn btn-primary" CausesValidation="false"
+                     OnClick="ClearForm_Click" />
             </p>
             <div>
                 <%-- Validation Controls --%>

@@ -71,4 +71,18 @@ public partial class FormSamples_StudentEnrollment : System.Web.UI.Page
             MessageLabel.Text = "Thank you for registering. A confirmation letter will be sent to you in the next few days.";
         }
     }
+
+    protected void ClearForm_Click(object sender, EventArgs e)
+    {
+        // Clearing Textboxes is done by setting the .Text property to an empty string
+        FirstName.Text = "";
+        LastName.Text = "";
+        MiddleName.Text = "";
+        SocialInsuranceNumber.Text = "";
+        DateOfBirth.Text = "";
+
+        // Clearing DropDowns, you set the SelectedIndex to -1
+        ProgramOfStudy.SelectedIndex = -1;
+        SchoolYear.SelectedIndex = -1;
+    }
 }
