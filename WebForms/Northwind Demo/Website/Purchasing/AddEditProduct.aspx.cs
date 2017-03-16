@@ -32,4 +32,29 @@ public partial class Purchasing_AddEditProduct : System.Web.UI.Page
             CurrentProducts.Items.Insert(0, "[select a product]");
         }
     }
+
+    protected void ShowProductDetails_Click(object sender, EventArgs e)
+    {
+        if(CurrentProducts.SelectedIndex == 0) // first item in the drop-down
+        {
+            MessageLabel.Text = "Please select product before clicking Show Product Details.";
+        }
+        else
+        {
+            int productId;
+            if(int.TryParse(CurrentProducts.SelectedValue, out productId))
+            {
+                // Instantiate my BLL class and call a method to get the specific product
+                var controller = new InventoryPurchasingController();
+                Product item = controller.LookupProduct(productId);
+
+                // "Unpack" the data into the form's controls
+                ProductID.Text = item.ProductID.ToString(); // ProductID is an int
+                ProductName.Text = item.ProductName;
+
+                // Update the message
+                MessageLabel.Text = "Product details found.";
+            }
+        }
+    }
 }
