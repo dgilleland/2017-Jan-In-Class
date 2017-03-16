@@ -26,10 +26,12 @@ var clockTimer;
 
 // event handlers to start/stop the timer
 document.getElementById('start').addEventListener('click', function(evt) {
-    clockTimer = setInterval(addSecond, 1000);
-    //                        function,  milliseconds
+    if(!clockTimer)
+        clockTimer = setInterval(addSecond, 1000);
+    //                            function,  milliseconds
 });
 
 document.getElementById('stop').addEventListener('click', function(evt) {
     clearInterval(clockTimer);
+    clockTimer = null;
 });
