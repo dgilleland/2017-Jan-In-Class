@@ -11,12 +11,19 @@ public partial class Purchasing_AddEditProduct : System.Web.UI.Page
 {
     protected void Page_Load(object sender, EventArgs e)
     {
-        if(!IsPostBack) // on the initial GET of the page
+        if (!IsPostBack) // on the initial GET of the page
         {
-            // We can populate some controls such as DropDownLists with data
-            PopulateProductsDropDown();
-            PopulateSupplierDropDown();
-            PopulateCategoryDropDown();
+            try
+            {
+                // We can populate some controls such as DropDownLists with data
+                PopulateProductsDropDown();
+                PopulateSupplierDropDown();
+                PopulateCategoryDropDown();
+            }
+            catch (Exception ex)
+            {
+                MessageLabel.Text = ex.Message;
+            }
         }
     }
 
@@ -69,36 +76,44 @@ public partial class Purchasing_AddEditProduct : System.Web.UI.Page
 
     protected void ShowProductDetails_Click(object sender, EventArgs e)
     {
-        if(CurrentProducts.SelectedIndex == 0) // first item in the drop-down
+        if (CurrentProducts.SelectedIndex == 0) // first item in the drop-down
         {
             MessageLabel.Text = "Please select product before clicking Show Product Details.";
         }
         else
         {
             int productId;
-            if(int.TryParse(CurrentProducts.SelectedValue, out productId))
+            if (int.TryParse(CurrentProducts.SelectedValue, out productId))
             {
-                // Instantiate my BLL class and call a method to get the specific product
-                var controller = new InventoryPurchasingController();
-                Product item = controller.LookupProduct(productId);
+                try
+                {
+                    // Instantiate my BLL class and call a method to get the specific product
+                    var controller = new InventoryPurchasingController();
+                    Product item = controller.LookupProduct(productId);
 
-                // "Unpack" the data into the form's controls
-                ProductID.Text = item.ProductID.ToString(); // ProductID is an int
-                ProductName.Text = item.ProductName;
-                // Select the supplier/category for the found product
-                Supplier.SelectedValue = item.SupplierID.ToString();
-                Category.SelectedValue = item.CategoryID.ToString();
-                // Other values that are displayed in text boxes
-                QtyPerUnit.Text = item.QuantityPerUnit;
-                UnitPrice.Text = item.UnitPrice.ToString();
-                InStock.Text = item.UnitsInStock.ToString();
-                OnOrder.Text = item.UnitsOnOrder.ToString();
-                ReorderLevel.Text = item.ReorderLevel.ToString();
-                // Set the checkbox for the found product's Discontinued flag
-                Discontinued.Checked = item.Discontinued;
+                    // "Unpack" the data into the form's controls
+                    ProductID.Text = item.ProductID.ToString(); // ProductID is an int
+                    ProductName.Text = item.ProductName;
+                    // Select the supplier/category for the found product
+                    Supplier.SelectedValue = item.SupplierID.ToString();
+                    Category.SelectedValue = item.CategoryID.ToString();
+                    // Other values that are displayed in text boxes
+                    QtyPerUnit.Text = item.QuantityPerUnit;
+                    UnitPrice.Text = item.UnitPrice.ToString();
+                    InStock.Text = item.UnitsInStock.ToString();
+                    OnOrder.Text = item.UnitsOnOrder.ToString();
+                    ReorderLevel.Text = item.ReorderLevel.ToString();
+                    // Set the checkbox for the found product's Discontinued flag
+                    Discontinued.Checked = item.Discontinued;
 
-                // Update the message
-                MessageLabel.Text = "Product details found.";
+                    // Update the message
+                    MessageLabel.Text = "Product details found.";
+
+                }
+                catch (Exception ex)
+                {
+                    MessageLabel.Text = ex.Message;
+                }
             }
         }
     }
