@@ -1,0 +1,53 @@
+<html>
+<head>
+    <style>
+        .hex:before {
+    content: " ";
+    width: 0; height: 0;
+    border-bottom: 30px solid #6C6;
+    border-left: 52px solid transparent;
+    border-right: 52px solid transparent;
+    position: absolute;
+    top: -30px;
+}
+
+.hex {
+    margin-top: 30px;
+    width: 104px;
+    height: 60px;
+    background-color: #6C6;
+    position: relative;
+}
+
+.hex > img {
+    max-width: 95px;
+    position: absolute;
+    top: 10px;
+    left: 5px;
+}
+
+.hex:after {
+    content: "";
+    width: 0;
+    position: absolute;
+    bottom: -30px;
+    border-top: 30px solid #6C6;
+    border-left: 52px solid transparent;
+    border-right: 52px solid transparent;
+}
+    </style>
+</head>
+<body>
+    <h1></h1>
+        <div class="card">
+            <div class="hex"><img src=".\images\military\black_Asset 1.png" alt=""></div>
+        </div>
+
+
+    <template id="vehicleTemplate">
+        <div class="card">
+            <div class="hex"><img src="" alt=""></div>
+        </div>
+    </template>
+</body>
+</html>
