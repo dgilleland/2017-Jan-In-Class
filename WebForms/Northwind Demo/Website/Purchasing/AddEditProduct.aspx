@@ -20,7 +20,7 @@
                                  CssClass="form-control">
                             </asp:DropDownList>
                             <asp:LinkButton ID="ShowProductDetails" runat="server"
-                                 CssClass="btn btn-primary"
+                                 CssClass="btn btn-primary" CausesValidation="false"
                                  OnClick="ShowProductDetails_Click">
                                 Show Product Details
                             </asp:LinkButton>
@@ -28,9 +28,29 @@
                     </div>
                 </div>
                 <div class="col-sm-6 text-center">
-                    <asp:Label ID="MessageLabel" runat="server" />
+                    <asp:LinkButton ID="AddProduct" runat="server"
+                         CssClass="btn btn-default" OnClick="AddProduct_Click">Add Product</asp:LinkButton>
+                    <asp:LinkButton ID="UpdateProduct" runat="server"
+                         CssClass="btn btn-default" OnClick="UpdateProduct_Click">Update Product</asp:LinkButton>
+                    <asp:LinkButton ID="DeleteProduct" runat="server"
+                         CssClass="btn btn-default" OnClick="DeleteProduct_Click">Delete Product</asp:LinkButton>
+                    <asp:LinkButton ID="ClearForm" runat="server" CausesValidation="false"
+                         CssClass="btn btn-default" OnClick="ClearForm_Click">Clear Form</asp:LinkButton>
                 </div>
             </div>
+        </div>
+        <div class="col-md-12">
+            <br />
+            <asp:Panel ID="MessagePanel" runat="server" Visible="false" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <asp:Label ID="MessageLabel" runat="server" />
+            </asp:Panel>
+
+            <asp:ValidationSummary ID="ValidationSummary1" runat="server" CssClass="alert alert-info"
+                 HeaderText="Please note the following problems with your form. Correct these before adding or updating a Product." />
+            <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server"
+                 ControlToValidate="ProductName" ErrorMessage="Product Name is required"
+                 Display="None"/>
         </div>
         <div class="col-md-12">
             <fieldset>
