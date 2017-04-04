@@ -2,6 +2,7 @@
 using NorthwindSystem.DAL;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel; // for accessing via ObjectDataSource controls
 using System.Data.SqlClient;
 using System.Linq;
 
@@ -10,6 +11,7 @@ namespace NorthwindSystem.BLL
     // This class is the public access into our system/application
     // that will be used by the website to provide CRUD maintenance
     // for inventory related data.
+    [DataObject] // This class is a source for data
     public class InventoryPurchasingController
     {
         #region Product CRUD
@@ -18,6 +20,19 @@ namespace NorthwindSystem.BLL
             using (var context = new NorthwindContext())
             {
                 return context.Products.ToList();
+            }
+        }
+
+        [DataObjectMethod(DataObjectMethodType.Select)] // to Read objects
+        public List<Product> GetProductsByCategory(int searchId)
+        {
+            using (NorthwindContext context = new NorthwindContext())
+            {
+                return context // from the context of where I connect to the Db server...
+                         .Database // access the database directly to ...
+                           .SqlQuery<Product>("EXEC Products_GetByCategories @cat"
+                                              , new SqlParameter("cat", searchId))
+                             .ToList();
             }
         }
 
@@ -84,6 +99,8 @@ namespace NorthwindSystem.BLL
         #endregion
 
         #region Category CRUD
+        // This method can be used to SELECT data
+        [DataObjectMethod(DataObjectMethodType.Select, false)]
         public List<Category> ListAllCategories()
         {
             // This "using" statement is different than the "using" at the top of this file.
