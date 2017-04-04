@@ -2,6 +2,7 @@
 using NorthwindSystem.DAL;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 
 namespace NorthwindSystem.BLL
@@ -17,6 +18,19 @@ namespace NorthwindSystem.BLL
             using (var context = new NorthwindContext())
             {
                 return context.Products.ToList();
+            }
+        }
+
+        public List<Product> GetProductsByPartialName(string name)
+        {
+            using (var context = new NorthwindContext())
+            {
+                var result = context // from the context of where I connect to Db Server
+                             .Database // access the database directly to...
+                             .SqlQuery<Product>( // run an SQL statement
+                    "EXEC Products_GetByPartialProductName @PartialName",
+                    new SqlParameter("PartialName", name));
+                return result.ToList();
             }
         }
 
