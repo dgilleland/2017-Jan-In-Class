@@ -23,8 +23,25 @@
     <div class="row">
         <div class="col-md-12">
             <asp:GridView ID="SearchResultsGridView" runat="server"
+                 AutoGenerateColumns="false"
                  CssClass="table table-hover table-condensed">
-
+                <Columns>
+                    <asp:BoundField DataField="ProductName"
+                         HeaderText="Product Name" />
+                    <asp:BoundField DataField="QuantityPerUnit"
+                         HeaderText="Qty/Unit" />
+                    <asp:BoundField DataField="UnitPrice"
+                         DataFormatString="{0:c}"
+                         HeaderText="Price" />
+                    <asp:BoundField DataField="UnitsInStock"
+                         HeaderText="In Stock" />
+                     <asp:BoundField DataField="UnitsOnOrder"
+                         HeaderText="On Order" />
+                    <asp:BoundField DataField="ReorderLevel" 
+                        HeaderText="Reorder Level" />
+                    <asp:CheckBoxField DataField="Discontinued"
+                        HeaderText="OLD" />
+                </Columns>
             </asp:GridView>
         </div>
     </div>
