@@ -261,3 +261,6 @@ WHERE StudentID = 199899200
 -- Hacker student brags to friends, who give him some drinks, and the next thing you know, they've got the code...
 UPDATE Student
 SET BalanceOwing = 1
+
+-- Read This:
+-- https://motherboard.vice.com/en_us/article/the-history-of-sql-injection-the-hack-that-will-never-go-away
