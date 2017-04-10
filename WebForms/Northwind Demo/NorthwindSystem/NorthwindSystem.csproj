@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BLL\CustomerOrdersController.cs" />
     <Compile Include="BLL\InventoryPurchasingController.cs" />
     <Compile Include="DAL\NorthwindContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
