@@ -9,7 +9,11 @@
   <div id="app">
     <img src="https://vuejs.org/images/logo.png" alt="Vue logo">
     <h1>{{ greeting }}</h1>
+    <hr />
     <weighted-item the-name="sample" the-weight="12"></weighted-item>
+    <hr />
+    <item-set></item-set>
+    <hr />
     <ul>
       <li>
         To learn more about Vue, visit
@@ -31,7 +35,11 @@
       </li>
     </ul>
   </div>
-
+  <template id="itemGroupTemplate">
+    <div>
+      <weighted-item></weighted-item>
+    </div>
+  </template>
   <script src="js/main.js"></script>
 </body>
 </html>
